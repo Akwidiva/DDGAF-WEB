@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/dhtmlx-gantt@7.1.6/codebase/dhtmlxgantt.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/dhtmlx-gantt@7.1.6/codebase/dhtmlxgantt.css" rel="stylesheet">
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="gantt_here" style='width:100%; height:100%;'></div>
+    <script>
+        gantt.config.xml_date = "%Y-%m-%d %H:%i";
+        gantt.init("gantt_here");
+
+        var tasks = {
+            data: [
+                { id: 1, text: "Définition des besoins", start_date: "2024-07-04", duration: 7 },
+                { id: 2, text: "Conception de l'interface", start_date: "2024-07-11", duration: 9 },
+                { id: 3, text: "Développement des fonctionnalités", start_date: "2024-07-20", duration: 15 },
+                { id: 4, text: "Tests et corrections", start_date: "2024-08-04", duration: 9 },
+                { id: 5, text: "Déploiement", start_date: "2024-08-13", duration: 4 }
+            ],
+         /*   links: [
+                { id: 1, source: 1, target: 2 },
+                { id: 2, source: 2, target: 3 },
+                { id: 3, source: 3, target: 4 },
+                { id: 4, source: 4, target: 5 }
+            ]*/
+        };
+
+        gantt.parse(tasks);
+    </script>
+</body>
+
+</html>
