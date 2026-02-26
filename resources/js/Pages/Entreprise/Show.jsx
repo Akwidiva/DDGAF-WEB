@@ -11,6 +11,7 @@ import {
   BiEdit,
   BiLink,
 } from "react-icons/bi";
+
 export default function Show({ auth, entreprise }) {
   return (
     <AuthenticatedLayout

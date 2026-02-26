@@ -156,7 +156,7 @@ export default function AttestationsTable({
                 sort_direction={queryParams.sort_direction}
                 sortChanged={sortChanged}
               >
-                <th className="px-3 py-3 text-center"> Code de l'attestation</th>
+                Code de l'attestation
               </TableHeading>
 
               <TableHeading
@@ -165,7 +165,7 @@ export default function AttestationsTable({
                 sort_direction={queryParams.sort_direction}
                 sortChanged={sortChanged}
               >
-                <th className="px-3 py-3 text-center"> Nom du particulier</th>
+                 Nom du particulier
               </TableHeading>
 
               <TableHeading
@@ -174,7 +174,7 @@ export default function AttestationsTable({
                 sort_direction={queryParams.sort_direction}
                 sortChanged={sortChanged}
               >
-                <th className="px-3 py-3 text-center">Statut</th>
+                Statut
               </TableHeading>
 
               <TableHeading
@@ -183,7 +183,7 @@ export default function AttestationsTable({
                 sort_direction={queryParams.sort_direction}
                 sortChanged={sortChanged}
               >
-                <th className="px-3 py-3 text-center"> Date de creation</th>
+                Date de creation
               </TableHeading>
 
               {/* <th className="px-3 py-3 text-center">Cree par</th> */}

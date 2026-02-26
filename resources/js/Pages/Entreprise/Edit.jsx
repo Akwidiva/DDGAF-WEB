@@ -10,6 +10,7 @@ export default function Create({ auth, entreprise}) {
   const { data, setData, post, errors, reset } = useForm({
     Nom: entreprise.Nom || "",
     Abreviation: entreprise.Abreviation || "",
+    email: entreprise.email || "",
     Capital: entreprise.Capital || "",
     NumeroRCCM: entreprise.NumeroRCCM || "",
     NIU: entreprise.NIU || "",
@@ -88,6 +89,20 @@ export default function Create({ auth, entreprise}) {
                   }
                 />
                 <InputError message={errors.Abreviation} className="mt-2" />
+              </div>
+              
+              <div className ="mt-4">
+                <InputLabel htmlFor="email" value="Adresse Email de l'entreprise" />
+                <TextInput
+                  id="email"
+                  type="email"
+                  name="email"      
+                  value={data.email}
+                  className="mt-1 block w-full"
+                  placeholder="exemple@entreprise.com"
+                  onChange={(e) => setData("email", e.target.value)}
+                />
+                <InputError message={errors.email} className="mt-2" />  
               </div>
 
               <div className="mt-4">

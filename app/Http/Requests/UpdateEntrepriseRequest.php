@@ -25,6 +25,7 @@ class UpdateEntrepriseRequest extends FormRequest
         return [
             'Nom' => ['required', 'string', 'max:255'],
             "Abreviation" => ['nullable', 'string'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('entreprises', 'email')->ignore($this->route('entreprise')->id)],
             "Capital" => ['nullable', 'integer'],
             "NumeroRCCM" => ['nullable', 'string'],
             "NIU" => ['nullable', 'string'],

@@ -33,13 +33,17 @@ class Attestation extends Model
         'created_by',
         'updated_by',
         'project_id',
+        'entreprise_id',
     ];
-
+    
+    public function entreprise()
+    {
+        return $this->belongsTo(Entreprise::class, 'entreprise_id');
+    }
     public function project()
     {
         return $this->belongsTo(Project::class);
     }
-
     public function assignedUser()
     {
         return $this->belongsTo(User::class, 'assigned_user_id');

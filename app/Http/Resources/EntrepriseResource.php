@@ -20,6 +20,7 @@ class EntrepriseResource extends JsonResource
             'id' => $this->id,
             'Nom' => $this->Nom,
             'Abreviation' => $this->Abreviation,
+            'email' => $this->email,
             'Capital' => $this->Capital,
 
             'NumeroRCCM' => $this->NumeroRCCM,

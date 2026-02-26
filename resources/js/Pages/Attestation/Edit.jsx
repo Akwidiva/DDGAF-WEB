@@ -25,6 +25,9 @@ export default function Create({ auth, attestation, projects, users }) {
     teneurDeComptesTitres: attestation.teneurDeComptesTitres || "",
     assigned_user_id: attestation.assigned_user_id || "",
     project_id: attestation.project_id || "",
+    service_id: attestation.service_id || "",
+    email: attestation.entreprise?.email || "",
+
     _method: "PUT",
   });
 
@@ -78,6 +81,19 @@ export default function Create({ auth, attestation, projects, users }) {
                 />
 
                 <InputError message={errors.nomSociete} className="mt-2" />
+              </div>
+              
+              <div className="mt-4">
+                <InputLabel htmlFor="email" value="Email de l'entreprise" />
+                <TextInput
+                  id="email"
+                  type="email"
+                  name="email"
+                  value={data.email}
+                  className="mt-1 block w-full"
+                  onChange={(e) => setData("email", e.target.value)}
+                />
+                <InputError message={errors.email} className="mt-2" />
               </div>
 
               <div className="mt-4">
@@ -312,12 +328,13 @@ export default function Create({ auth, attestation, projects, users }) {
               </div>
               <div className="mt-4 text-right">
                 <button
+                  type="button"
                   onClick={() => goBackInHistory()}
                   className="bg-gray-100 py-1 px-3 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2"
                 >
                   Annuler
                 </button>
-                <button className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600">
+                <button type="submit" className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600">
                   Valider
                 </button>
               </div>

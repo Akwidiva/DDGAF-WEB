@@ -31,6 +31,7 @@ class UpdateAttestationRequest extends FormRequest
         'service_id' => 'required|exists:services,id',
         'assigned_user_id' => 'required|exists:users,id',
         'project_id' => 'required|exists:projects,id',
+        'email' => ['nullable', 'email', ],
     ];
 }
 

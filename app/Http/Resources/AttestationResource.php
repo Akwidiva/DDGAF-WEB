@@ -30,7 +30,8 @@ class AttestationResource extends JsonResource
             'numeroRCCM' => $this->numeroRCCM,
             'NIU' => $this->NIU,
             'numeroAvis' => $this->numeroAvis,
-            'date' => (new Carbon($this->date))->locale('fr')->format('d F Y'),
+            // Always use the record's creation date as the authoritative date
+            'date' => (new Carbon($this->created_at))->locale('fr')->format('d F Y'),
 
             'codeAdherent' => $this->codeAdherent,
             'valeur' => $this->valeur,
@@ -50,6 +51,14 @@ class AttestationResource extends JsonResource
             'createdBy' => new UserResource($this->createdBy),
             'updatedBy' => new UserResource($this->updatedBy),
             'project' => new ProjectResource($this->project),
+            'entreprise' => $this->entreprise ? [
+            'id' => $this->entreprise->id,
+            'Nom' => $this->entreprise->Nom,
+            'email' => $this->entreprise->email, // This pulls the email from the Entreprise table
+] : [ 'id' => null,
+    'Nom' => $this->nomSociete, // Fallback to the text name if link is missing
+    'email' => null,
+],
 
         ];
     }

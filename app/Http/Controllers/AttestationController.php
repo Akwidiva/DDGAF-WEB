@@ -18,6 +18,9 @@ use TCPDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Mail; // --- ADDED ---
+use App\Mail\AttestationMail;
+use App\Models\EmailLog;
 
 class AttestationController extends Controller
 {
@@ -61,7 +64,62 @@ class AttestationController extends Controller
             'error' => session('error'),
         ]);
     }
+      
+    public function sendEmail(Attestation $attestation)
+    {
+        // 1. Fetch the email from the related entreprise
+        $email = $attestation->entreprise->email ?? null;
 
+        if (!$email) {
+            return back()->with('error', "L'entreprise n'a pas d'adresse email.");
+        }
+
+        try {
+            // 2. Generate the PDF file
+            $filename = "Attestation_de_" . $attestation->nomSociete . ".pdf";
+            $filePath = public_path($filename);
+
+            // Generate the PDF file and save to public folder
+            $this->generatePDF($attestation, $filePath);
+
+            // Verify file exists before sending
+            if (!file_exists($filePath)) {
+                EmailLog::create([
+                    'user_id' => Auth::id(),
+                    'attestation_id' => $attestation->id,
+                    'recipient_email' => $email,
+                    'status' => 'failure',
+                    'error_message' => 'PDF file not generated',
+                ]);
+
+                return back()->with('error', "Impossible de générer le fichier PDF.");
+            }
+
+            // 3. Send the Mail
+            Mail::to($email)->send(new AttestationMail($attestation, $filePath));
+
+            // Log success
+            EmailLog::create([
+                'user_id' => Auth::id(),
+                'attestation_id' => $attestation->id,
+                'recipient_email' => $email,
+                'status' => 'success',
+            ]);
+
+            return back()->with('success', "Attestation envoyée avec succès à : " . $email);
+        } catch (\Exception $e) {
+            // Log failure
+            EmailLog::create([
+                'user_id' => Auth::id(),
+                'attestation_id' => $attestation->id,
+                'recipient_email' => $email,
+                'status' => 'failure',
+                'error_message' => $e->getMessage(),
+            ]);
+
+            return back()->with('error', "Échec de l'envoi : " . $e->getMessage());
+        }
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -104,6 +162,11 @@ class AttestationController extends Controller
     public function store(StoreAttestationRequest $request)
     {
         $data = $request->validated();
+
+        $entreprise = Entreprise::where('Nom', $request->nomSociete)->first();
+        if ($entreprise) {
+            $data['entreprise_id'] = $entreprise->id;
+        }
         $data['created_by'] = Auth::id();
         $data['updated_by'] = Auth::id();
 
@@ -112,11 +175,9 @@ class AttestationController extends Controller
 
         $attestations = Attestation::all();
 
-        foreach ($attestations as $attestation) {
-            if ($attestation->codeAttest == $data['codeAttest']) {
-                return redirect()->route('attestation.create')
-                    ->with('error', 'désolé mais cette attestation existe déjà pour cette exercice!');
-            }
+       if (Attestation::where('codeAttest', $data['codeAttest'])->exists()) {
+            return redirect()->route('attestation.create')
+                ->with('error', 'désolé mais cette attestation existe déjà pour cette exercice!');
         }
 
         Attestation::create($data);
@@ -129,9 +190,12 @@ class AttestationController extends Controller
      */
     public function show(Attestation $attestation)
     {
-        // Récupération des informations du projet et de l'utilisateur associés à l'attestation
+        $attestation->load(['entreprise', 'project', 'createdBy', 'updatedBy', 'assignedUser']);
+         // Récupération des informations du projet et de l'utilisateur associés à l'attestation
         return inertia('Attestation/Show', [
             'attestation' => new AttestationResource($attestation),
+            'success' => session('success'),
+            'error' => session('error'),
         ]);
     }
 
@@ -154,9 +218,26 @@ class AttestationController extends Controller
         $data = $request->validated();
         $data['updated_by'] = Auth::id();
 
+        if (!$attestation->entreprise_id) {
+            $entreprise = Entreprise::where('Nom', $request->nomSociete)->first();
+            if ($entreprise) {
+                $data['entreprise_id'] = $entreprise->id;
+            }
+        }
+
         $attestation->update($data);
 
-        return to_route('attestation.index')
+        // Update the entreprise email if provided
+        if ($request->has('email')) {
+            $attestation->load('entreprise'); // Reload the relationship
+            if ($attestation->entreprise) {
+                $attestation->entreprise->update([
+                    'email' => $request->email
+                ]);
+            }
+        }
+
+        return to_route('attestation.show', $attestation->id)
             ->with('success', "L'attestation \"$attestation->nomSociete\" a bien ete mis a jour !");
     }
 
@@ -259,7 +340,8 @@ class AttestationController extends Controller
     public function visualiserModel(Attestation $attestation)
     {
         $qrCodes = [];
-        $exercice = \Carbon\Carbon::parse($attestation->date)->year;
+        // Use the record creation date as the authoritative date for PDFs
+        $exercice = \Carbon\Carbon::parse($attestation->created_at)->year;
         // Construction du contenu avec plusieurs lignes de texte
         $content = "code de l'attestation " . $attestation->codeAttest . "\n";
         $content .= "Exercice: " . $exercice . "\n";
@@ -300,7 +382,19 @@ class AttestationController extends Controller
 
     public function telechargerModel(Attestation $attestation)
     {
-        $exercice = \Carbon\Carbon::parse($attestation->date)->year;
+        $filename = "Attestation_de_" . $attestation->nomSociete . ".pdf";
+        $filePath = public_path($filename);
+        
+        $this->generatePDF($attestation, $filePath);
+
+        // Téléchargement du PDF
+        return response()->download($filePath);
+    }
+
+    private function generatePDF(Attestation $attestation, $filePath)
+    {
+        // Use the record creation date as the authoritative date for PDFs
+        $exercice = \Carbon\Carbon::parse($attestation->created_at)->year;
         // Construction du contenu avec plusieurs lignes de texte
         $content = "code de l'attestation " . $attestation->codeAttest . "\n";
         $content .= "Exercice: " . $exercice . "\n";
@@ -321,8 +415,6 @@ class AttestationController extends Controller
         $qrCode = QrCode::size(50) // Taille réduite du QR Code pour économiser de l'espace
             ->backgroundColor(255, 255, 255)
             ->generate($qrCodeContent);
-
-        $filename = "Attestation_de_" . $attestation->nomSociete . ".pdf";
 
         $data = [
             'attestation' => $attestation,
@@ -354,7 +446,6 @@ class AttestationController extends Controller
 
         // Créer le PDF
         $pdf = new TCPDF;
-        $pdf->SetProtection(array('print', 'copy'), '123.321A', '123.321A', 3, null);
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(false);
         $pdf->SetTitle("Attestation_de_" . $attestation->nomSociete);
@@ -387,9 +478,6 @@ class AttestationController extends Controller
         $pdf->write2DBarcode($qrCodeContent, 'QRCODE,L', $x, $y, $qrWidth, $qrHeight, $style, 'N');
 
         // Sortie du PDF dans un fichier
-        $pdf->Output(public_path($filename), 'F');
-
-        // Téléchargement du PDF
-        return response()->download(public_path($filename));
+        $pdf->Output($filePath, 'F');
     }
 }

@@ -61,11 +61,12 @@ export default function Create({
     quantiteTitresCollectes: "",
     quantiteTitresCollectesTotale: "",
     teneurDeComptesTitres: "",
-    assigned_user_id: firstUser.id,      // ID de l'utilisateur assigné
-    service_id: firstUser.service_id,    // ID du service de l'utilisateur
+    assigned_user_id: firstUser.id || '',      // ID de l'utilisateur assigné
+    service_id: firstUser.service_id || '',    // ID du service de l'utilisateur
     project_id: firstProject ? firstProject.id : '', // Par défaut, le project_id du premier projet
   });
   // console.log(date);
+
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -126,7 +127,7 @@ export default function Create({
               </div>
               <div>
                 <InputLabel
-                  htmlFor="attestation_project_id"
+                  htmlFor="project_id"
                   value="Exercice Affilie"
                 />
 
@@ -145,6 +146,7 @@ export default function Create({
                   type="text"
                   name="name"
                   value={data.name}
+                  autoComplete="off"
                   className="mt-1 block w-full"
                   readOnly // Ajoutez l'attribut readOnly pour rendre le champ non modifiable  onChange={(e) => setData("name", e.target.value)}
                 />
@@ -155,7 +157,7 @@ export default function Create({
               <div className="mt-4 flex items-center">
                 <div className="flex-1">
                   <InputLabel
-                    htmlFor="attestation_name"
+                    htmlFor="attestation_name_dropdown"
                     value="Selectionner le Nom de l'entreprise "
                   />
                   <div className="flex items-center">

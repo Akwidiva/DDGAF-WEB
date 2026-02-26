@@ -25,6 +25,7 @@ class StoreEntrepriseRequest extends FormRequest
     {
         return [
             'Nom' => ['required', 'string', 'max:255', Rule::unique('entreprises', 'Nom')],
+            'email' => ['required', 'email', 'max:255', Rule::unique('entreprises', 'email')],
             "Abreviation" => ['nullable', 'string', Rule::unique('entreprises', 'Abreviation')],
             "Capital" => ['nullable', 'integer'],
             "NumeroRCCM" => ['nullable', 'string',Rule::unique('entreprises', 'NumeroRCCM')],

@@ -66,7 +66,7 @@
                 a rempli les conditions fixées par l'avis <strong style="text-transform: uppercase;">
                     N°{{ $attestation['numeroAvis'] }}</strong>, du
                 <em style="text-transform: none;">
-                    {{ \Carbon\Carbon::parse($attestation['date'])->locale('fr')->translatedFormat('d F Y') }}
+                    {{ \Carbon\Carbon::parse($attestation['created_at'])->locale('fr')->translatedFormat('d F Y') }}
                 </em>, à savoir :
                 <ol>
                     <li>la codification et l'inscription en compte des valeurs mobilières qu'elle a émises suivant les

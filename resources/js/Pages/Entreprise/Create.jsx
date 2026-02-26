@@ -20,7 +20,7 @@ export default function Create({ auth, error }) {
     QuantiteTitresCollectes: "",
     QuantiteTitresCollectesTotale: "",
     TeneurDeComptesTitres: "",
-
+    email: "",
   });
 
   const onSubmit = (e) => {
@@ -91,7 +91,26 @@ export default function Create({ auth, error }) {
                 />
                 <InputError message={errors.Abreviation} className="mt-2" />
               </div>
+              
+              <div className="mt-4">
+                <InputLabel
+                  htmlFor="email"
+                  value="Adresse Email de l'entreprise"
+                />
 
+                <TextInput
+                  id="email"
+                  type="email"
+                  name="email"
+                  value={data.email}
+                  className="mt-1 block w-full"
+                  placeholder="exemple@entreprise.com"
+                  onChange={(e) => setData("email", e.target.value)}
+                />
+
+                <InputError message={errors.email} className="mt-2" />
+              </div>
+              
               <div className="mt-4">
                 <InputLabel
                   htmlFor="Capital"
@@ -146,8 +165,9 @@ export default function Create({ auth, error }) {
                   onChange={(e) => setData("NIU", e.target.value.toUpperCase())}
                 />
                 <InputError message={errors.NIU} className="mt-2" />
-              </div>
-
+              </div> 
+                
+              
               <div className="mt-4">
                 <InputLabel htmlFor="codeAdherent" value="Code adhérent" />
 
@@ -157,7 +177,9 @@ export default function Create({ auth, error }) {
                   name="codeAdherent"
                   value={data.codeAdherent}
                   className="mt-1 block w-full"
-                  onChange={(e) => setData("codeAdherent", e.target.value.toUpperCase())}
+                  onChange={(e) =>
+                    setData("codeAdherent", e.target.value.toUpperCase())
+                  }
                 />
 
                 <InputError message={errors.codeAdherent} className="mt-2" />
@@ -172,14 +194,19 @@ export default function Create({ auth, error }) {
                   name="valeur"
                   value={data.valeur}
                   className="mt-1 block w-full"
-                  onChange={(e) => setData("valeur", e.target.value.toUpperCase())}
+                  onChange={(e) =>
+                    setData("valeur", e.target.value.toUpperCase())
+                  }
                 />
 
                 <InputError message={errors.valeur} className="mt-2" />
               </div>
 
               <div className="mt-4">
-                <InputLabel htmlFor="codeValeur" value="Entrez le code valeur (ISIN) " />
+                <InputLabel
+                  htmlFor="codeValeur"
+                  value="Entrez le code valeur (ISIN) "
+                />
 
                 <TextInput
                   id="codeValeur"
@@ -187,7 +214,9 @@ export default function Create({ auth, error }) {
                   name="codeValeur"
                   value={data.codeValeur}
                   className="mt-1 block w-full"
-                  onChange={(e) => setData("codeValeur", e.target.value.toUpperCase())}
+                  onChange={(e) =>
+                    setData("codeValeur", e.target.value.toUpperCase())
+                  }
                 />
 
                 <InputError message={errors.codeValeur} className="mt-2" />
@@ -210,7 +239,7 @@ export default function Create({ auth, error }) {
                     onChange={(e) =>
                       setData(
                         "QuantiteTitresCollectes",
-                        e.target.value.toUpperCase()
+                        e.target.value.toUpperCase(),
                       )
                     }
                   />
@@ -240,7 +269,7 @@ export default function Create({ auth, error }) {
                       onChange={(e) =>
                         setData(
                           "QuantiteTitresCollectesTotale",
-                          e.target.value.toUpperCase()
+                          e.target.value.toUpperCase(),
                         )
                       }
                     />
@@ -266,7 +295,7 @@ export default function Create({ auth, error }) {
                   onChange={(e) =>
                     setData(
                       "TeneurDeComptesTitres",
-                      e.target.value.toUpperCase()
+                      e.target.value.toUpperCase(),
                     )
                   }
                 />
