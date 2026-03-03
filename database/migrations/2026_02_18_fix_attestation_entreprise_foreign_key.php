@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('attestations', function (Blueprint $table) {
-            // Add the missing entreprise_id foreign key
-            $table->foreignId('entreprise_id')->nullable()->constrained('entreprises')->onDelete('set null');
-        });
+        // Only add the column if it doesn't already exist
+        if (!Schema::hasColumn('attestations', 'entreprise_id')) {
+            Schema::table('attestations', function (Blueprint $table) {
+                // Add the missing entreprise_id foreign key
+                $table->foreignId('entreprise_id')->nullable()->constrained('entreprises')->onDelete('set null');
+            });
+        }
     }
 
     /**

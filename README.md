@@ -29,7 +29,7 @@
 6. Définir la clé d'application : `php artisan key:generate --ansi`
 7. Exécuter des migrations et ensemencer des données : `php artisan migrate --seed`
 8. Démarrer le serveur vite : `npm run dev`
-9. Démarrer le serveur Artisan : `php artisan serve`
+9. Démarrer le serveur Artisan : `php -S localhost:8000 public/index.php`
 =======
 # DDGAF-WEB
 Dépôt pour stocker le code source de l'application de gestion des attestions de dématérialisation du service de DDGAF a la CAA
