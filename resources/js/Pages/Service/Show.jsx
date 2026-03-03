@@ -12,12 +12,12 @@ export default function Show({ auth, service }) {
     <AuthenticatedLayout
       user={auth.user}
       header={
-        <div className="flex items-center justify-between">
-          <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-[#2FAC86] p-4 rounded-md shadow-md text-white">
+          <h2 className="font-semibold text-xl text-white leading-tight">
             {`Service  ${service.Nom}`}
           </h2>
 
-          <div className="flex space-x-4">
+          <div className="flex flex-wrap gap-3">
             <Link
               href={route("service.index", service.id)}
               className="flex items-center bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded shadow transition-colors duration-300 ease-in-out"

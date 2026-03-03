@@ -67,12 +67,12 @@ export default function Show({ auth, user }) {
     <AuthenticatedLayout
       user={auth.user}
       header={
-        <div className="flex items-center justify-between">
-          <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-[#2FAC86] p-4 rounded-md shadow-md text-white">
+          <h2 className="font-semibold text-xl text-white leading-tight">
             {`Compte de ${user.name}`}
           </h2>
 
-          <div className="flex space-x-4">
+          <div className="flex flex-wrap gap-3">
             <Link href={route("user.index", user.id)} className="action-link-retour">
               <FaArrowLeft className="icon" />
               Retour

@@ -22,10 +22,10 @@ export default function Dashboard({
     <AuthenticatedLayout
       user={auth.user}
       header={
-        <div className="flex justify-between items-center bg-gray-100 dark:bg-gray-800 p-4 rounded-md shadow-md">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-[#2FAC86] p-4 rounded-md shadow-md text-white">
           <div className="flex items-center">
-            <FiBarChart2 className="text-gray-600 dark:text-gray-300 mr-2" />
-            <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <FiBarChart2 className="text-white mr-2" />
+            <h2 className="font-semibold text-xl text-white leading-tight">
               TABLEAU DE BORD
             </h2>
           </div>

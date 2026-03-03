@@ -19,11 +19,11 @@ export default function Show({
     <AuthenticatedLayout
       user={auth.user}
       header={
-        <div className="flex items-center justify-between">
-          <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-[#2FAC86] p-4 rounded-md shadow-md text-white">
+          <h2 className="font-semibold text-xl text-white leading-tight">
             {`Exercice ${project.name}`}
           </h2>
-          <div className="flex justify-end">
+          <div className="flex flex-wrap gap-3 justify-end">
             <Link
               href={route("project.index", project.id)}
               className="bg-red-500 py-1 px-3 mr-2 text-white rounded shadow transition-all hover:bg-red-600 flex items-center"

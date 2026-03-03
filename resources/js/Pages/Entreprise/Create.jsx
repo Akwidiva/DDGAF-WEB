@@ -33,8 +33,8 @@ export default function Create({ auth, error }) {
     <AuthenticatedLayout
       user={auth.user}
       header={
-        <div className="flex justify-between items-center">
-          <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-[#2FAC86] p-4 rounded-md shadow-md text-white">
+          <h2 className="font-semibold text-xl text-white leading-tight">
             Enregistrer une nouvelle entreprise
           </h2>
         </div>
@@ -312,7 +312,7 @@ export default function Create({ auth, error }) {
                 >
                   Annuler
                 </Link>
-                <button className="bg-emerald-500 py-2 px-3 text-white rounded shadow transition-all hover:bg-emerald-600">
+                <button className="bg-[#87888a] hover:bg-[#7a7b7d] text-white py-2 px-3 rounded shadow transition-colors">
                   Valider
                 </button>
               </div>

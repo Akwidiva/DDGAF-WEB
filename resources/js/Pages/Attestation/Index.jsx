@@ -16,16 +16,16 @@ export default function Index({
     <AuthenticatedLayout
       user={auth.user}
       header={
-        <div className="flex justify-between items-center bg-gray-100 dark:bg-gray-800 p-4 rounded-md shadow-md">
-          <div className="flex justify-between items-center">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-[#2FAC86] p-4 rounded-md shadow-md text-white">
+          <div className="flex items-center">
             <BiArchive className="inline-block align-middle mr-1" />
-            <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 className="font-semibold text-xl text-white leading-tight">
               ATTESTATIONS
             </h2>
           </div>
           <Link
             href={route("attestation.create")}
-            className="flex items-center bg-emerald-500 py-1 px-3 text-white rounded shadow-md transition-all hover:bg-emerald-600"
+            className="flex items-center bg-[#87888a] hover:bg-[#7a7b7d] text-white py-1 px-3 rounded shadow-md transition-colors"
           >
             <FiFilePlus className="mr-2" /> Générer une attestation
           </Link>

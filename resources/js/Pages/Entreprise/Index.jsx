@@ -108,13 +108,13 @@ export default function Index({ auth, entreprises, queryParams = null, success }
     <AuthenticatedLayout
       user={auth.user}
       header={
-        <div className="flex justify-between items-center bg-gray-100 dark:bg-gray-800 p-4 rounded-md shadow-md">
-          <h2 className="font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight flex items-center">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-[#2FAC86] p-4 rounded-md shadow-md text-white">
+          <h2 className="font-semibold text-2xl text-white leading-tight flex items-center">
             <AiOutlineBank className="h-6 w-6 mr-2" /> ENTREPRISES
           </h2>
           <Link
             href={route("entreprise.create")}
-            className="flex items-center bg-emerald-500 py-1 px-3 text-white rounded shadow-md transition-all hover:bg-emerald-600"
+            className="flex items-center bg-[#87888a] hover:bg-[#7a7b7d] text-white py-1 px-3 rounded shadow-md transition-colors"
           >
             <FiFolderPlus className="mr-2" /> Enregistrer une entreprise
           </Link>

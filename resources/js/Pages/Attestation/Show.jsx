@@ -26,12 +26,12 @@ export default function Show({ auth, attestation, id, success, error }) {
     <AuthenticatedLayout
       user={auth.user}
       header={
-        <div className="flex items-center justify-between">
-          <h2 className="font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-[#2FAC86] p-4 rounded-md shadow-md text-white">
+          <h2 className="font-semibold text-2xl text-white leading-tight">
             {`Attestation de ${attestation.nomSociete}`}
           </h2>
 
-          <div className="flex space-x-4">
+          <div className="flex flex-wrap gap-3">
             <Link
               href={route("attestation.index")}
               className="flex items-center bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded shadow transition-colors duration-300 ease-in-out"
@@ -45,7 +45,7 @@ export default function Show({ auth, attestation, id, success, error }) {
               href={route("attestation.sendEmail", attestation.id)}
               method="post"
               as="button"
-              className="flex items-center bg-emerald-500 hover:bg-emerald-600 text-white py-1 px-3 rounded shadow transition-colors duration-300 ease-in-out"
+              className="flex items-center bg-[#87888a] hover:bg-[#7a7b7d] text-white py-1 px-3 rounded shadow transition-colors duration-300 ease-in-out"
             >
               <AiOutlineMail className="h-5 w-5 mr-2" />
               Envoyer par Email
@@ -62,7 +62,7 @@ export default function Show({ auth, attestation, id, success, error }) {
 
             <Link
               href={route("attestation.visualiserModel", attestation.id)}
-              className="flex items-center bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded shadow transition-colors duration-300 ease-in-out"
+              className="flex items-center bg-[#87888a] hover:bg-[#7a7b7d] text-white py-1 px-3 rounded shadow transition-colors duration-300 ease-in-out"
             >
               <AiOutlineEye className="h-5 w-5 mr-2" />
               Visualiser
