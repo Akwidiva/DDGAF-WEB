@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <p align="center">
   <a href="https://laravel.com" target="_blank">
     <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo">
@@ -30,7 +30,6 @@
 7. Exécuter des migrations et ensemencer des données : `php artisan migrate --seed`
 8. Démarrer le serveur vite : `npm run dev`
 9. Démarrer le serveur Artisan : `php -S localhost:8000 public/index.php`
-=======
 # DDGAF-WEB
 Dépôt pour stocker le code source de l'application de gestion des attestions de dématérialisation du service de DDGAF a la CAA
 >>>>>>> 5019e8b6c452d3bf8de9863a5072b01b02755598
