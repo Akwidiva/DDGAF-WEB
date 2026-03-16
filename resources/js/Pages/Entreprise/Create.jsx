@@ -10,6 +10,7 @@ export default function Create({ auth, error }) {
   const formatNumber = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   };
+  const fieldInputClass = "mt-1 block w-full rounded-2xl border border-emerald-200 bg-white/85 text-gray-900 placeholder:text-emerald-400 focus:border-emerald-500 focus:ring-emerald-500";
   const { data, setData, post, errors, reset } = useForm({
     Nom: "",
     Abreviation: "",
@@ -45,14 +46,14 @@ export default function Create({ auth, error }) {
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           {error && (
-            <div className="bg-red-500 py-2 px-4 text-white rounded mb-4">
+            <div className="mb-4 rounded-2xl border border-rose-200 bg-rose-50 py-2 px-4 text-rose-900">
               {error}
             </div>
           )}
-          <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+          <div className="overflow-hidden rounded-3xl border border-emerald-100 bg-gradient-to-br from-[#eefcf5] via-white to-[#f6fffb] shadow-xl">
             <form
               onSubmit={onSubmit}
-              className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg"
+              className="space-y-6 p-6 sm:p-10"
             >
               <div className="mt-4 flex items-center">
                 <div className="flex-1">
@@ -66,7 +67,7 @@ export default function Create({ auth, error }) {
                       type="text"
                       name="Nom"
                       value={data.Nom}
-                      className="mt-1 block w-full"
+                      className={fieldInputClass}
                       isFocused={true}
                       onChange={(e) =>
                         setData("Nom", e.target.value.toUpperCase())
@@ -84,7 +85,7 @@ export default function Create({ auth, error }) {
                   type="text"
                   name="Abreviation"
                   value={data.Abreviation}
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   onChange={(e) =>
                     setData("Abreviation", e.target.value.toUpperCase())
                   }
@@ -103,7 +104,7 @@ export default function Create({ auth, error }) {
                   type="email"
                   name="email"
                   value={data.email}
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   placeholder="exemple@entreprise.com"
                   onChange={(e) => setData("email", e.target.value)}
                 />
@@ -121,7 +122,7 @@ export default function Create({ auth, error }) {
                   type="text"
                   name="Capital"
                   value={data.Capital ? formatNumber(data.Capital) : ""}
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   onChange={(e) => {
                     // Récupérer la valeur saisie
                     const inputValue = e.target.value;
@@ -145,7 +146,7 @@ export default function Create({ auth, error }) {
                   type="text"
                   name="NumeroRCCM"
                   value={data.NumeroRCCM}
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   onChange={(e) =>
                     setData("NumeroRCCM", e.target.value.toUpperCase())
                   }
@@ -161,7 +162,7 @@ export default function Create({ auth, error }) {
                   type="text"
                   name="NIU"
                   value={data.NIU}
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   onChange={(e) => setData("NIU", e.target.value.toUpperCase())}
                 />
                 <InputError message={errors.NIU} className="mt-2" />
@@ -176,7 +177,7 @@ export default function Create({ auth, error }) {
                   type="number"
                   name="codeAdherent"
                   value={data.codeAdherent}
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   onChange={(e) =>
                     setData("codeAdherent", e.target.value.toUpperCase())
                   }
@@ -193,7 +194,7 @@ export default function Create({ auth, error }) {
                   type="text"
                   name="valeur"
                   value={data.valeur}
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   onChange={(e) =>
                     setData("valeur", e.target.value.toUpperCase())
                   }
@@ -213,7 +214,7 @@ export default function Create({ auth, error }) {
                   type="text"
                   name="codeValeur"
                   value={data.codeValeur}
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   onChange={(e) =>
                     setData("codeValeur", e.target.value.toUpperCase())
                   }
@@ -235,7 +236,7 @@ export default function Create({ auth, error }) {
                     type="text"
                     name="QuantiteTitresCollectes"
                     value={data.QuantiteTitresCollectes}
-                    className="mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300"
+                    className="mt-1 block w-full rounded-2xl border border-emerald-200 bg-white/85 text-gray-900 focus:border-emerald-500 focus:ring-emerald-500"
                     onChange={(e) =>
                       setData(
                         "QuantiteTitresCollectes",
@@ -265,7 +266,7 @@ export default function Create({ auth, error }) {
                       type="text"
                       name="QuantiteTitresCollectesTotale"
                       value={data.QuantiteTitresCollectesTotale}
-                      className="mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300"
+                      className="mt-1 block w-full rounded-2xl border border-emerald-200 bg-white/85 text-gray-900 focus:border-emerald-500 focus:ring-emerald-500"
                       onChange={(e) =>
                         setData(
                           "QuantiteTitresCollectesTotale",
@@ -291,7 +292,7 @@ export default function Create({ auth, error }) {
                   type="text"
                   name="TeneurDeComptesTitres"
                   value={data.TeneurDeComptesTitres}
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   onChange={(e) =>
                     setData(
                       "TeneurDeComptesTitres",
@@ -305,14 +306,14 @@ export default function Create({ auth, error }) {
                   className="mt-2"
                 />
               </div>
-              <div className="mt-8 text-right">
+              <div className="mt-10 flex flex-wrap justify-end gap-3">
                 <Link
                   href={route("entreprise.index")}
-                  className="bg-gray-100 py-2 px-3 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2"
+                  className="rounded-2xl border border-emerald-200 bg-white/70 px-5 py-3 font-semibold text-emerald-700 shadow hover:border-emerald-300 hover:bg-white focus:outline-none focus:ring-4 focus:ring-emerald-100"
                 >
                   Annuler
                 </Link>
-                <button className="bg-[#87888a] hover:bg-[#7a7b7d] text-white py-2 px-3 rounded shadow transition-colors">
+                <button className="rounded-2xl bg-emerald-500 px-6 py-3 font-semibold text-white shadow-lg shadow-emerald-200 transition-transform hover:-translate-y-0.5 hover:bg-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-200">
                   Valider
                 </button>
               </div>

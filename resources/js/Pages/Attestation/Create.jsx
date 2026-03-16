@@ -16,6 +16,8 @@ export default function Create({
 }) {
   const currentYear = new Date().getFullYear();
   const projectList = useMemo(() => projects?.data ?? [], [projects]);
+  const fieldInputClass = "mt-1 block w-full rounded-2xl border border-emerald-200 bg-white/85 text-gray-900 placeholder:text-emerald-400 focus:border-emerald-500 focus:ring-emerald-500";
+  const selectInputClass = "mt-1 block w-full rounded-2xl border border-emerald-200 bg-white/90 text-gray-900 focus:border-emerald-500 focus:ring-emerald-500";
 
   const formatDate = (date) => {
     const day = String(date.getDate()).padStart(2, '0');
@@ -162,14 +164,14 @@ export default function Create({
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           {error && (
-            <div className="bg-red-500 py-2 px-4 text-white rounded mb-4">
+            <div className="mb-4 rounded-2xl border border-rose-200 bg-rose-50 py-2 px-4 text-rose-900">
               {error}
             </div>
           )}
-          <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+          <div className="overflow-hidden rounded-3xl border border-emerald-100 bg-gradient-to-br from-[#eefcf5] via-white to-[#f6fffb] shadow-xl">
             <form
               onSubmit={onSubmit}
-              className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg"
+              className="space-y-6 p-6 sm:p-10"
             >
 
               {/* capture de la valeur pour assigned_user_id */}
@@ -204,7 +206,7 @@ export default function Create({
                   id="project_year"
                   name="project_year"
                   value={String(selectedYear)}
-                  className="mt-1 block w-full"
+                  className={selectInputClass}
                   onChange={(e) => setSelectedYear(parseInt(e.target.value, 10))}
                 >
                   {yearOptions.map((year) => (
@@ -252,7 +254,7 @@ export default function Create({
                       id="attestation_name_dropdown"
                       name="nomSociete_dropdown"
                       value={data.nomSociete}
-                      className="mt-1 block w-full"
+                      className={selectInputClass}
                       onChange={(e) => {
                         const selectedAtt = entreprises.data.find(
                           (att) => att.Nom === e.target.value
@@ -299,7 +301,7 @@ export default function Create({
                   type="text"
                   name="abreviation"
                   value={data.abreviation}
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   readOnly
                   onChange={(e) =>
                     setData("abreviation", e.target.value.toUpperCase())
@@ -319,7 +321,7 @@ export default function Create({
                   type="text" // Changer le type à text
                   name="capital"
                   value={data.capital ? formatNumber(data.capital) : ""}
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   readOnly
                   onChange={(e) => {
                     // Récupérer la valeur saisie
@@ -343,7 +345,7 @@ export default function Create({
                   type="text"
                   name="numeroRCCM"
                   value={data.numeroRCCM}
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   readOnly
                   onChange={(e) =>
                     setData("numeroRCCM", e.target.value.toUpperCase())
@@ -361,7 +363,7 @@ export default function Create({
                   name="NIU"
                   value={data.NIU}
                   readOnly
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   onChange={(e) => setData("NIU", e.target.value.toUpperCase())}
                 />
                 <InputError message={errors.NIU} className="mt-2" />
@@ -381,7 +383,7 @@ export default function Create({
                     type="text"
                     name="quantiteTitresCollectes"
                     value={data.quantiteTitresCollectes}
-                    className="mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300"
+                    className="mt-1 block w-full rounded-2xl border border-emerald-200 bg-white/85 text-gray-900 focus:border-emerald-500 focus:ring-emerald-500"
                     readOnly
                     onChange={(e) =>
                       setData(
@@ -409,7 +411,7 @@ export default function Create({
                       type="text"
                       name="quantiteTitresCollectesTotale"
                       value={data.quantiteTitresCollectesTotale}
-                      className="mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300"
+                      className="mt-1 block w-full rounded-2xl border border-emerald-200 bg-white/85 text-gray-900 focus:border-emerald-500 focus:ring-emerald-500"
                       readOnly
                       onChange={(e) =>
                         setData(
@@ -436,7 +438,7 @@ export default function Create({
                   type="text"
                   name="teneurDeComptesTitres"
                   value={data.teneurDeComptesTitres}
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   readOnly
                   onChange={(e) =>
                     setData(
@@ -459,7 +461,7 @@ export default function Create({
                   type="text"
                   name="numeroAvis"
                   value={data.numeroAvis}
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   readOnly
                   onChange={(e) => setData("numeroAvis", e.target.value.toUpperCase())}
                 />
@@ -477,7 +479,7 @@ export default function Create({
                   type="date"
                   name="dateAvis" // Modifier le nom ici pour correspondre au champ
                   value={data.dateAvis} // Lier la valeur de dateAvis
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   readOnly
                   onChange={(e) => setData("dateAvis", e.target.value)} // Capturer la date saisie
                 />
@@ -492,7 +494,7 @@ export default function Create({
                   type="text"
                   name="codeAdherent"
                   value={data.codeAdherent}
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   readOnly
                   onChange={(e) => setData("codeAdherent", e.target.value.toUpperCase())}
                 />
@@ -507,7 +509,7 @@ export default function Create({
                   type="text"
                   name="valeur"
                   value={data.valeur}
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   readOnly
                   onChange={(e) =>
                     setData("valeur", e.target.value.toUpperCase())
@@ -525,7 +527,7 @@ export default function Create({
                   name="codeValeur"
                   value={data.codeValeur}
                   readOnly
-                  className="mt-1 block w-full"
+                  className={fieldInputClass}
                   onChange={(e) =>
                     setData("codeValeur", e.target.value.toUpperCase())
                   }
@@ -543,14 +545,14 @@ export default function Create({
                 onChange={(e) => setData("date", e.target.value)}
               />
 
-              <div className="mt-8 text-right">
+              <div className="mt-10 flex flex-wrap justify-end gap-3">
                 <Link
                   href={route("attestation.index")}
-                  className="bg-red-400 py-2 px-3 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2"
+                  className="rounded-2xl border border-emerald-200 bg-white/70 px-5 py-3 font-semibold text-emerald-700 shadow hover:border-emerald-300 hover:bg-white focus:outline-none focus:ring-4 focus:ring-emerald-100"
                 >
                   Annuler
                 </Link>
-                <button className="bg-[#87888a] hover:bg-[#7a7b7d] text-white py-2 px-3 rounded shadow transition-colors">
+                <button className="rounded-2xl bg-emerald-500 px-6 py-3 font-semibold text-white shadow-lg shadow-emerald-200 transition-transform hover:-translate-y-0.5 hover:bg-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-200">
                   Valider
                 </button>
               </div>
