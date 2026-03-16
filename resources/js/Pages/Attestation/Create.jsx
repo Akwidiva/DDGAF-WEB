@@ -5,6 +5,7 @@ import SelectInput from "@/Components/SelectInput";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function Create({
   auth,
@@ -14,6 +15,8 @@ export default function Create({
   entreprises,
 }) {
   const currentYear = new Date().getFullYear();
+  const projectList = useMemo(() => projects?.data ?? [], [projects]);
+
   const formatDate = (date) => {
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -32,7 +35,16 @@ export default function Create({
   });
 
   const firstUser = users.data.find(user => user.role === 'user') || { id: '', service_id: '' };
-  const firstProject = projects.data.length > 0 ? projects.data[0] : null;
+  const firstProject = projectList.length > 0 ? projectList[0] : null;
+
+  const extractYearFromDateString = (dateString) => {
+    if (!dateString) {
+      return null;
+    }
+    const [day, month, year] = dateString.split('-');
+    const parsedYear = parseInt(year, 10);
+    return Number.isNaN(parsedYear) ? null : parsedYear;
+  };
 
   // Fonction pour formater la date au format YYYY-MM-DD si nécessaire
   const formatDateToISO = (dateString) => {
@@ -44,6 +56,25 @@ export default function Create({
     ? formatDateToISO(firstProject.dateAvis) // Format si la date est dans un autre format
     : "";
 
+  const firstProjectYear = firstProject ? extractYearFromDateString(firstProject.dateAvis) : null;
+
+  const projectYears = useMemo(() => {
+    return projectList
+      .map((project) => extractYearFromDateString(project.dateAvis))
+      .filter((year) => typeof year === "number");
+  }, [projectList]);
+
+  const earliestProjectYear = projectYears.length ? Math.min(...projectYears) : currentYear;
+  const startYear = Math.min(currentYear, earliestProjectYear);
+  const MAX_SELECTABLE_YEAR = 2050;
+  const yearOptions = useMemo(() => {
+    const years = [];
+    for (let year = startYear; year <= MAX_SELECTABLE_YEAR; year += 1) {
+      years.push(year);
+    }
+    return years;
+  }, [startYear]);
+
   const { data, setData, post, errors, reset } = useForm({
     name: firstProject ? firstProject.name : '',
     // date: now,
@@ -53,7 +84,7 @@ export default function Create({
     capital: "",
     numeroRCCM: "",
     NIU: "",
-    numeroAvis: firstProject.numeroAvis, // Initialiser avec la valeur de numeroAvis du premier projet
+    numeroAvis: firstProject ? firstProject.numeroAvis : '', // Initialiser avec la valeur de numeroAvis du premier projet
     dateAvis: initialDateAvis, // Initialiser avec la valeur de dateAvis du premier projet
     codeAdherent: "",
     valeur: "",
@@ -66,6 +97,45 @@ export default function Create({
     project_id: firstProject ? firstProject.id : '', // Par défaut, le project_id du premier projet
   });
   // console.log(date);
+
+  const defaultYear = firstProjectYear ?? (yearOptions[0] ?? currentYear);
+  const [selectedYear, setSelectedYear] = useState(defaultYear);
+
+  useEffect(() => {
+    if (!yearOptions.includes(selectedYear)) {
+      setSelectedYear(yearOptions[0] ?? currentYear);
+    }
+  }, [yearOptions, selectedYear, currentYear]);
+
+  const projectForSelectedYear = useMemo(() => {
+    return projectList.find(
+      (project) => extractYearFromDateString(project.dateAvis) === selectedYear
+    ) || null;
+  }, [projectList, selectedYear]);
+
+  useEffect(() => {
+    if (projectForSelectedYear) {
+      setData((prev) => ({
+        ...prev,
+        project_id: projectForSelectedYear.id || '',
+        name: projectForSelectedYear.name || '',
+        numeroAvis: projectForSelectedYear.numeroAvis || '',
+        dateAvis: projectForSelectedYear.dateAvis
+          ? formatDateToISO(projectForSelectedYear.dateAvis)
+          : '',
+      }));
+    } else {
+      setData((prev) => ({
+        ...prev,
+        project_id: '',
+        name: '',
+        numeroAvis: '',
+        dateAvis: '',
+      }));
+    }
+  }, [projectForSelectedYear, setData]);
+
+  const hasProjectForSelectedYear = Boolean(projectForSelectedYear);
 
 
   const onSubmit = (e) => {
@@ -127,9 +197,27 @@ export default function Create({
               </div>
               <div>
                 <InputLabel
-                  htmlFor="project_id"
-                  value="Exercice Affilie"
+                  htmlFor="project_year"
+                  value="Exercice affilié"
                 />
+                <SelectInput
+                  id="project_year"
+                  name="project_year"
+                  value={String(selectedYear)}
+                  className="mt-1 block w-full"
+                  onChange={(e) => setSelectedYear(parseInt(e.target.value, 10))}
+                >
+                  {yearOptions.map((year) => (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  ))}
+                </SelectInput>
+                {!hasProjectForSelectedYear && (
+                  <p className="mt-2 text-sm text-red-600">
+                    Aucun exercice n'est enregistré pour {selectedYear}. Veuillez en créer un avant de générer l'attestation.
+                  </p>
+                )}
 
                 {/* pour capture la valeur de l'id de l'exercice */}
                 <TextInput
@@ -147,10 +235,9 @@ export default function Create({
                   name="name"
                   value={data.name}
                   autoComplete="off"
-                  className="mt-1 block w-full"
-                  readOnly // Ajoutez l'attribut readOnly pour rendre le champ non modifiable  onChange={(e) => setData("name", e.target.value)}
+                  className="hidden"
+                  readOnly
                 />
-
                 <InputError message={errors.project_id} className="mt-2" />
               </div>
 

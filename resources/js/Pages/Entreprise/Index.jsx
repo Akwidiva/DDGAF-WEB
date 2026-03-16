@@ -126,15 +126,15 @@ export default function Index({ auth, entreprises, queryParams = null, success }
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           {success && (
-            <div className="bg-emerald-500 py-2 px-4 text-white rounded mb-4">
+            <div className="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 py-2 px-4 text-emerald-900">
               {success}
             </div>
           )}
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div className="p-6 text-gray-900 dark:text-gray-100">
-              <div className="overflow-auto">
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
+              <div className="overflow-auto rounded-3xl border border-emerald-100 bg-gradient-to-br from-[#eefcf5] to-white p-1 shadow-xl">
+                <table className="w-full text-left text-sm text-gray-700">
+                  <thead className="border-b border-emerald-100 bg-[#dff5ea] text-xs font-semibold uppercase text-[#1f3b2e]">
                     <tr className="text-nowrap">
                       <TableHeading
                         name="Nom"
@@ -158,12 +158,12 @@ export default function Index({ auth, entreprises, queryParams = null, success }
                       <th className="px-3 py-3 text-center">ACTIONS</th>
                     </tr>
                   </thead>
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
+                  <thead className="border-b border-emerald-100 bg-[#ecfaf2] text-xs uppercase text-[#1f3b2e]">
                     <tr className="text-nowrap">
                       {/* <th className="px-3 py-3"></th> */}
                       <th className="px-3 py-3">
                         <TextInput
-                          className="w-full"
+                          className="w-full rounded-xl border border-emerald-200 bg-white/80 text-gray-700 placeholder:text-emerald-400 focus:border-emerald-400 focus:ring-emerald-400"
                           defaultValue={queryParams.Nom}
                           placeholder="Taper le Nom de l'entreprise ici ..."
                           onBlur={(e) =>
@@ -181,29 +181,28 @@ export default function Index({ auth, entreprises, queryParams = null, success }
                   <tbody>
                     {entreprises.data.map((entreprise) => (
                       <tr
-                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                        className="border-b border-emerald-50 bg-white/95 transition-colors duration-150 hover:bg-[#f3fbf7]"
                         key={entreprise.id}
                       >
                         {/* <td className="px-3 py-2 text-nowrap text-center">
                           {entreprise.id}
                         </td> */}
-                        <th className="px-3 py-2 text-center text-black-300 hover:underline">
+                        <th className="px-3 py-3 text-center font-medium text-emerald-800">
                           <Link href={route("entreprise.show", entreprise.id)}>
                             {entreprise.Nom}
                           </Link>
                         </th>
-                        <td className="px-3 py-2 text-nowrap text-center">
+                        <td className="px-3 py-3 text-center text-sm text-gray-500">
                           {entreprise.created_at}
                         </td>
-                        <td className="px-3 py-2 text-nowrap text-center">
+                        <td className="px-3 py-3 text-center text-sm text-gray-500">
                           {entreprise.createdBy.name}
                         </td>
-                        <td className="px-3 py-2 text-nowrap text-center">
+                        <td className="px-3 py-3 text-center">
                           <div className="flex justify-center">
                             <Link
                               href={route("entreprise.edit", entreprise.id)}
-                              style={{ width : 110, display : "flex", justifyContent : "space-between", alignItems : "center"}}
-                              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded button-link"
+                              className="inline-flex min-w-[120px] items-center justify-center gap-2 rounded-2xl bg-emerald-500 py-2 px-4 font-semibold text-white shadow hover:bg-emerald-600 focus:ring-4 focus:ring-emerald-200"
                             >
                               <AiOutlineEdit className="mr-1" /> Modifier
                             </Link>

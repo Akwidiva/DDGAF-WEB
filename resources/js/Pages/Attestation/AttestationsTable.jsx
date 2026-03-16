@@ -123,19 +123,19 @@ export default function AttestationsTable({
   return (
     <>
       {success && (
-        <div className="bg-emerald-500 py-2 px-4 text-white rounded mb-4">
+        <div className="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 py-2 px-4 text-emerald-900">
           {success}
         </div>
       )}
       {error && (
-        <div className="bg-emerald-500 py-2 px-4 text-white rounded mb-4">
+        <div className="mb-4 rounded-xl border border-rose-200 bg-rose-50 py-2 px-4 text-rose-900">
           {error}
         </div>
       )}
       {/* <pre>{JSON.stringify(attestations, undefined, 2)}</pre> */}
-      <div className="overflow-auto">
-        <table className="w-full text-sm text-left rtl:text-center text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
+      <div className="overflow-auto rounded-3xl border border-emerald-100 bg-gradient-to-br from-[#eefcf5] to-white p-1 shadow-xl">
+        <table className="w-full text-left text-sm text-gray-700">
+          <thead className="border-b border-emerald-100 bg-[#dff5ea] text-xs font-semibold uppercase text-[#1f3b2e]">
             <tr className="text-nowrap">
               <TableHeading
                 name="id"
@@ -190,13 +190,13 @@ export default function AttestationsTable({
               <th className="px-3 py-3 text-center">Actions</th>
             </tr>
           </thead>
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
+          <thead className="border-b border-emerald-100 bg-[#ecfaf2] text-xs uppercase text-[#1f3b2e]">
             <tr className="text-nowrap">
               <th className="px-3 py-3"></th>
               {!hideProjectColumn && <th className="px-3 py-3"></th>}
               <th className="px-3 py-3 text-center">
                 <TextInput
-                  className="w-full"
+                  className="w-full rounded-xl border border-emerald-200 bg-white/80 text-gray-700 placeholder:text-emerald-400 focus:border-emerald-400 focus:ring-emerald-400"
                   defaultValue={queryParams.codeAttest}
                   placeholder="Code de l'attestation..."
                   onBlur={(e) =>
@@ -207,7 +207,7 @@ export default function AttestationsTable({
               </th>
               <th className="px-3 py-3 text-center">
                 <TextInput
-                  className="w-full"
+                  className="w-full rounded-xl border border-emerald-200 bg-white/80 text-gray-700 placeholder:text-emerald-400 focus:border-emerald-400 focus:ring-emerald-400"
                   defaultValue={queryParams.name}
                   placeholder="Nom du particulier..."
                   onBlur={(e) =>
@@ -218,7 +218,7 @@ export default function AttestationsTable({
               </th> 
               <th className="px-3 py-3 text-center">
                 <SelectInput
-                  className="w-full"
+                  className="w-full rounded-xl border border-emerald-200 bg-white/80 text-gray-700 focus:border-emerald-400 focus:ring-emerald-400"
                   defaultValue={queryParams.status}
                   onChange={(e) => searchFieldChanged("status", e.target.value)}
                 >
@@ -237,29 +237,31 @@ export default function AttestationsTable({
           <tbody>
             {attestations.data.map((attestation) => (
               <tr
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                className="border-b border-emerald-50 bg-white/95 transition-colors duration-150 hover:bg-[#f3fbf7]"
                 key={attestation.id}
               >
-                <td className="px-3 py-2 text-center">{attestation.id}</td>
+                <td className="px-3 py-3 text-center font-semibold text-emerald-900">
+                  {attestation.id}
+                </td>
                 {!hideProjectColumn && (
-                  <td className="px-3 py-2 text-center">
+                  <td className="px-3 py-3 text-center text-gray-600">
                     {attestation.project.name}
                   </td>
                 )}
-                <th className="px-3 py-2 text-center text-black-100 hover:underline">
+                <th className="px-3 py-3 text-center font-medium text-emerald-800">
                   <Link href={route("attestation.show", attestation.id)}>
                     {attestation.codeAttest}
                   </Link>
                 </th>
-                <th className="px-3 py-2 text-center text-black-100 hover:underline">
+                <th className="px-3 py-3 text-center font-medium text-slate-700">
                   <Link href={route("attestation.show", attestation.id)}>
                     {attestation.nomSociete}
                   </Link>
                 </th>
-                <td className="px-3 py-2 text-nowrap text-center">
+                <td className="px-3 py-3 text-center text-nowrap">
                   <span
                     className={
-                      "px-2 py-1 text-nowrap text-center rounded text-white " +
+                      "inline-flex items-center justify-center rounded-full px-3 py-1 text-sm font-semibold text-white shadow " +
                       ATTESTATION_STATUS_CLASS_MAP[attestation.status]
                     }
                   >
@@ -271,21 +273,20 @@ export default function AttestationsTable({
                     <AiOutlineCloseCircle className="inline-block ml-2 text-red-500" />
                   )}
                 </td>
-                <td className="px-3 py-2 text-nowrap text-center">
+                <td className="px-3 py-3 text-center text-sm text-gray-500">
                   {attestation.created_at}
                 </td>
                 {/* <td className="px-3 py-2 text-center ">
                   {attestation.createdBy.name}
                 </td> */}
-                <td className="px-3 py-2 whitespace-nowrap text-center">
-                  <div className="flex space-x-1 items-center">
+                <td className="px-3 py-3 text-center">
+                  <div className="flex items-center justify-center space-x-2">
                     <Link
                       href={route(
                         "attestation.visualiserModel",
                         attestation.id
                       )}
-                      style={{ width : 120, display : "flex", justifyContent : "space-between", alignItems : "center"}}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded button-link"
+                      className="inline-flex min-w-[130px] items-center justify-center gap-2 rounded-2xl bg-emerald-500 py-2 px-4 font-semibold text-white shadow hover:bg-emerald-600 focus:ring-4 focus:ring-emerald-200"
                     >
                       <FaEye className="icon" />
                       Visualiser

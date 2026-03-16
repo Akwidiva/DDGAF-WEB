@@ -37,31 +37,30 @@ export default function Dashboard({
         <div className="py-8">
           <div className="py-4 flex justify-center">
             <div className="max-w-7xl sm:px-6 lg:px-8 mt-4">
-              <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div className="p-6 text-center text-gray-900 dark:text-gray-100">
-                  <h3 className="text-3xl font-semibold mb-4">
+              <div className="overflow-hidden rounded-3xl border border-emerald-100 bg-gradient-to-br from-[#e6faf3] via-white to-[#f2fff9] shadow-xl">
+                <div className="p-8 text-center text-gray-900">
+                  <h3 className="text-3xl font-semibold text-emerald-800">
                     Bienvenue, Utilisateur !
                   </h3>
-                  <p className="text-lg text-gray-700 dark:text-gray-300">
-                    Maintenant vous êtes connecté(e), que souhaitez-vous faire
-                    ensuite ?
+                  <p className="mt-3 text-lg text-emerald-900/80">
+                    Maintenant vous êtes connecté(e), que souhaitez-vous faire ensuite ?
                   </p>
-                  <div className="mt-6 flex justify-center gap-4">
+                  <div className="mt-8 flex flex-wrap justify-center gap-4">
                     <Link href="attestation/mes-attestations">
-                      <button className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:shadow-outline">
-                        <BiArchive className="inline-block mr-2" />
+                      <button className="flex items-center gap-2 rounded-2xl bg-emerald-500 px-5 py-3 text-white shadow-lg shadow-emerald-200 transition-all hover:-translate-y-0.5 hover:bg-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-200">
+                        <BiArchive className="text-xl" />
                         Gérer vos attestations
                       </button>
                     </Link>
                     <Link href="entreprise">
-                      <button className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:shadow-outline">
-                        <AiOutlineBank className="inline-block align-middle mr-1" />
+                      <button className="flex items-center gap-2 rounded-2xl bg-emerald-500 px-5 py-3 text-white shadow-lg shadow-emerald-200 transition-all hover:-translate-y-0.5 hover:bg-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-200">
+                        <AiOutlineBank className="text-xl" />
                         Gérer les entreprises
                       </button>
                     </Link>
                     <Link href="/profile">
-                      <button className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:shadow-outline">
-                        <BiSolidUserDetail className="inline-block mr-2" />
+                      <button className="flex items-center gap-2 rounded-2xl bg-emerald-500 px-5 py-3 text-white shadow-lg shadow-emerald-200 transition-all hover:-translate-y-0.5 hover:bg-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-200">
+                        <BiSolidUserDetail className="text-xl" />
                         Gérer votre Profil
                       </button>
                     </Link>
