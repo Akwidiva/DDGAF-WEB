@@ -66,16 +66,10 @@ export default function Create({
       .filter((year) => typeof year === "number");
   }, [projectList]);
 
-  const earliestProjectYear = projectYears.length ? Math.min(...projectYears) : currentYear;
-  const startYear = Math.min(currentYear, earliestProjectYear);
-  const MAX_SELECTABLE_YEAR = 2050;
   const yearOptions = useMemo(() => {
-    const years = [];
-    for (let year = startYear; year <= MAX_SELECTABLE_YEAR; year += 1) {
-      years.push(year);
-    }
-    return years;
-  }, [startYear]);
+    // Only show years that have existing projects
+    return [...new Set(projectYears)].sort((a, b) => a - b);
+  }, [projectYears]);
 
   const { data, setData, post, errors, reset } = useForm({
     name: firstProject ? firstProject.name : '',
