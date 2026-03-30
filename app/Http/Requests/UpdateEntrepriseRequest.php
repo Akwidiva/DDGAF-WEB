@@ -24,17 +24,17 @@ class UpdateEntrepriseRequest extends FormRequest
     {
         return [
             'Nom' => ['required', 'string', 'max:255'],
-            "Abreviation" => ['nullable', 'string'],
-            'email' => ['required', 'email', 'max:255', Rule::unique('entreprises', 'email')->ignore($this->route('entreprise')->id)],
-            "Capital" => ['nullable', 'integer'],
-            "NumeroRCCM" => ['nullable', 'string'],
-            "NIU" => ['nullable', 'string'],
-            'codeAdherent'=> ['nullable','integer'],
-            'valeur'=> ['nullable','string'],
-            'codeValeur'=> ['nullable','string'],
-            "QuantiteTitresCollectes" => ['nullable', 'integer'],
-            "QuantiteTitresCollectesTotale" => ['nullable', 'integer'],
-            "TeneurDeComptesTitres" => ['nullable', 'string'],
+            "Abreviation" => ['required', 'string'],
+            'email' => ['nullable', 'email', 'max:255', Rule::unique('entreprises', 'email')->ignore($this->route('entreprise')->id)],
+            "Capital" => ['required', 'integer'],
+            "NumeroRCCM" => ['required', 'string'],
+            "NIU" => ['required', 'string'],
+            'codeAdherent'=> ['required','integer'],
+            'valeur'=> ['required','string'],
+            'codeValeur'=> ['required','string'],
+            "QuantiteTitresCollectes" => ['required', 'integer'],
+            "QuantiteTitresCollectesTotale" => ['required', 'integer'],
+            "TeneurDeComptesTitres" => ['required', 'string'],
         ];
     }
 }

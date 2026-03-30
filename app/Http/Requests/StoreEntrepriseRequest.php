@@ -25,17 +25,17 @@ class StoreEntrepriseRequest extends FormRequest
     {
         return [
             'Nom' => ['required', 'string', 'max:255', Rule::unique('entreprises', 'Nom')],
-            'email' => ['required', 'email', 'max:255', Rule::unique('entreprises', 'email')],
-            "Abreviation" => ['nullable', 'string', Rule::unique('entreprises', 'Abreviation')],
-            "Capital" => ['nullable', 'integer'],
-            "NumeroRCCM" => ['nullable', 'string',Rule::unique('entreprises', 'NumeroRCCM')],
-            "NIU" => ['nullable', 'string',Rule::unique('entreprises', 'NIU')],
-            'codeAdherent'=> ['nullable','integer',Rule::unique('entreprises', 'codeAdherent')],
-            'valeur'=> ['nullable','string',Rule::unique('entreprises', 'valeur')],
-            'codeValeur'=> ['nullable','string',Rule::unique('entreprises', 'codeValeur')],
-            "QuantiteTitresCollectes" => ['nullable', 'integer'],
-            "QuantiteTitresCollectesTotale" => ['nullable', 'integer'],
-            "TeneurDeComptesTitres" => ['nullable', 'string'],
+            'email' => ['nullable', 'email', 'max:255', Rule::unique('entreprises', 'email')],
+            "Abreviation" => ['required', 'string', Rule::unique('entreprises', 'Abreviation')],
+            "Capital" => ['required', 'integer'],
+            "NumeroRCCM" => ['required', 'string',Rule::unique('entreprises', 'NumeroRCCM')],
+            "NIU" => ['required', 'string',Rule::unique('entreprises', 'NIU')],
+            'codeAdherent'=> ['required','integer',Rule::unique('entreprises', 'codeAdherent')],
+            'valeur'=> ['required','string',Rule::unique('entreprises', 'valeur')],
+            'codeValeur'=> ['required','string',Rule::unique('entreprises', 'codeValeur')],
+            "QuantiteTitresCollectes" => ['required', 'integer'],
+            "QuantiteTitresCollectesTotale" => ['required', 'integer'],
+            "TeneurDeComptesTitres" => ['required', 'string'],
         ];
     }
 }
