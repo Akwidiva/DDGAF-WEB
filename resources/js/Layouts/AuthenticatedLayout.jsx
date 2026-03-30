@@ -15,7 +15,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-      <nav className="border-b border-emerald-100 bg-gradient-to-r from-[#f0fff9] via-white to-[#e5f7ef]">
+      <nav className="sticky top-0 z-50 border-b border-emerald-100 dark:border-emerald-900 bg-gradient-to-r from-emerald-50 via-white to-emerald-50 dark:from-gray-800 dark:via-gray-800 dark:to-gray-800 shadow-md dark:shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex">

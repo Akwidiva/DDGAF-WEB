@@ -108,7 +108,7 @@ export default function Index({ auth, entreprises, queryParams = null, success }
     <AuthenticatedLayout
       user={auth.user}
       header={
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-[#2FAC86] p-4 rounded-md shadow-md text-white">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-[#2FAC86] p-4 rounded-md shadow-md dark:shadow-emerald-900/50 text-white">
           <h2 className="font-semibold text-2xl text-white leading-tight flex items-center">
             <AiOutlineBank className="h-6 w-6 mr-2" /> ENTREPRISES
           </h2>
@@ -126,15 +126,15 @@ export default function Index({ auth, entreprises, queryParams = null, success }
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           {success && (
-            <div className="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 py-2 px-4 text-emerald-900">
+            <div className="mb-4 rounded-xl border border-emerald-200 dark:border-emerald-700 bg-emerald-50 dark:bg-gray-700 py-2 px-4 text-emerald-900 dark:text-emerald-200">
               {success}
             </div>
           )}
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div className="p-6 text-gray-900 dark:text-gray-100">
-              <div className="overflow-auto rounded-3xl border border-emerald-100 bg-gradient-to-br from-[#eefcf5] to-white p-1 shadow-xl">
-                <table className="w-full text-left text-sm text-gray-700">
-                  <thead className="border-b border-emerald-100 bg-[#dff5ea] text-xs font-semibold uppercase text-[#1f3b2e]">
+              <div className="overflow-auto rounded-3xl border border-emerald-100 dark:border-emerald-900 bg-gradient-to-br from-emerald-50 dark:from-gray-800 to-white dark:to-gray-800 p-1 shadow-xl dark:shadow-gray-900/50">
+                <table className="w-full text-left text-sm text-gray-700 dark:text-gray-300">
+                  <thead className="border-b border-emerald-100 dark:border-emerald-900 bg-emerald-100 dark:bg-gray-700 text-xs font-semibold uppercase text-emerald-900 dark:text-emerald-400">
                     <tr className="text-nowrap">
                       <TableHeading
                         name="Nom"
@@ -158,12 +158,12 @@ export default function Index({ auth, entreprises, queryParams = null, success }
                       <th className="px-3 py-3 text-center">ACTIONS</th>
                     </tr>
                   </thead>
-                  <thead className="border-b border-emerald-100 bg-[#ecfaf2] text-xs uppercase text-[#1f3b2e]">
+                  <thead className="border-b border-emerald-100 dark:border-emerald-900 bg-emerald-50 dark:bg-gray-800 text-xs uppercase text-emerald-900 dark:text-emerald-400">
                     <tr className="text-nowrap">
                       {/* <th className="px-3 py-3"></th> */}
                       <th className="px-3 py-3">
                         <TextInput
-                          className="w-full rounded-xl border border-emerald-200 bg-white/80 text-gray-700 placeholder:text-emerald-400 focus:border-emerald-400 focus:ring-emerald-400"
+                          className="w-full rounded-xl border border-emerald-200 dark:border-emerald-700 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 placeholder:text-emerald-400 dark:placeholder:text-emerald-500 focus:border-emerald-400 focus:ring-emerald-400"
                           defaultValue={queryParams.Nom}
                           placeholder="Taper le Nom de l'entreprise ici ..."
                           onBlur={(e) =>
@@ -181,7 +181,7 @@ export default function Index({ auth, entreprises, queryParams = null, success }
                   <tbody>
                     {entreprises.data.map((entreprise) => (
                       <tr
-                        className="border-b border-emerald-50 bg-white/95 transition-colors duration-150 hover:bg-[#f3fbf7]"
+                        className="border-b border-emerald-50 dark:border-emerald-900 bg-white dark:bg-gray-800 transition-colors duration-150 hover:bg-emerald-50 dark:hover:bg-gray-700"
                         key={entreprise.id}
                       >
                         {/* <td className="px-3 py-2 text-nowrap text-center">
@@ -202,7 +202,7 @@ export default function Index({ auth, entreprises, queryParams = null, success }
                           <div className="flex justify-center">
                             <Link
                               href={route("entreprise.edit", entreprise.id)}
-                              className="inline-flex min-w-[120px] items-center justify-center gap-2 rounded-2xl bg-emerald-500 py-2 px-4 font-semibold text-white shadow hover:bg-emerald-600 focus:ring-4 focus:ring-emerald-200"
+                              className="inline-flex min-w-[120px] items-center justify-center gap-2 rounded-2xl bg-emerald-500 dark:bg-emerald-600 py-2 px-4 font-semibold text-white shadow dark:shadow-emerald-900/50 hover:bg-emerald-600 dark:hover:bg-emerald-500 focus:ring-4 focus:ring-emerald-200 dark:focus:ring-emerald-900/50"
                             >
                               <AiOutlineEdit className="mr-1" /> Modifier
                             </Link>

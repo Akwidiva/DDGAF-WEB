@@ -123,19 +123,19 @@ export default function AttestationsTable({
   return (
     <>
       {success && (
-        <div className="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 py-2 px-4 text-emerald-900">
+            <div className="mb-4 rounded-xl border border-emerald-200 dark:border-emerald-700 bg-emerald-50 dark:bg-gray-700 py-2 px-4 text-emerald-900 dark:text-emerald-200">
           {success}
         </div>
       )}
       {error && (
-        <div className="mb-4 rounded-xl border border-rose-200 bg-rose-50 py-2 px-4 text-rose-900">
+        <div className="mb-4 rounded-xl border border-rose-200 dark:border-rose-900 bg-rose-50 dark:bg-gray-700 py-2 px-4 text-rose-900 dark:text-rose-300">
           {error}
         </div>
       )}
       {/* <pre>{JSON.stringify(attestations, undefined, 2)}</pre> */}
-      <div className="overflow-auto rounded-3xl border border-emerald-100 bg-gradient-to-br from-[#eefcf5] to-white p-1 shadow-xl">
-        <table className="w-full text-left text-sm text-gray-700">
-          <thead className="border-b border-emerald-100 bg-[#dff5ea] text-xs font-semibold uppercase text-[#1f3b2e]">
+      <div className="overflow-auto rounded-3xl border border-emerald-100 dark:border-emerald-900 bg-gradient-to-br from-emerald-50 dark:from-gray-800 to-white dark:to-gray-800 p-1 shadow-xl dark:shadow-gray-900/50">
+        <table className="w-full text-left text-sm text-gray-700 dark:text-gray-300">
+          <thead className="border-b border-emerald-100 dark:border-emerald-900 bg-emerald-100 dark:bg-gray-700 text-xs font-semibold uppercase text-emerald-900 dark:text-emerald-400">
             <tr className="text-nowrap">
               <TableHeading
                 name="id"
@@ -190,13 +190,13 @@ export default function AttestationsTable({
               <th className="px-3 py-3 text-center">Actions</th>
             </tr>
           </thead>
-          <thead className="border-b border-emerald-100 bg-[#ecfaf2] text-xs uppercase text-[#1f3b2e]">
+          <thead className="border-b border-emerald-100 dark:border-emerald-900 bg-emerald-50 dark:bg-gray-800 text-xs uppercase text-emerald-900 dark:text-emerald-400">
             <tr className="text-nowrap">
               <th className="px-3 py-3"></th>
               {!hideProjectColumn && <th className="px-3 py-3"></th>}
               <th className="px-3 py-3 text-center">
                 <TextInput
-                  className="w-full rounded-xl border border-emerald-200 bg-white/80 text-gray-700 placeholder:text-emerald-400 focus:border-emerald-400 focus:ring-emerald-400"
+                  className="w-full rounded-xl border border-emerald-200 dark:border-emerald-700 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 placeholder:text-emerald-400 dark:placeholder:text-emerald-500 focus:border-emerald-400 focus:ring-emerald-400"
                   defaultValue={queryParams.codeAttest}
                   placeholder="Code de l'attestation..."
                   onBlur={(e) =>
@@ -207,7 +207,7 @@ export default function AttestationsTable({
               </th>
               <th className="px-3 py-3 text-center">
                 <TextInput
-                  className="w-full rounded-xl border border-emerald-200 bg-white/80 text-gray-700 placeholder:text-emerald-400 focus:border-emerald-400 focus:ring-emerald-400"
+                  className="w-full rounded-xl border border-emerald-200 dark:border-emerald-700 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 placeholder:text-emerald-400 dark:placeholder:text-emerald-500 focus:border-emerald-400 focus:ring-emerald-400"
                   defaultValue={queryParams.name}
                   placeholder="Nom du particulier..."
                   onBlur={(e) =>
@@ -218,7 +218,7 @@ export default function AttestationsTable({
               </th> 
               <th className="px-3 py-3 text-center">
                 <SelectInput
-                  className="w-full rounded-xl border border-emerald-200 bg-white/80 text-gray-700 focus:border-emerald-400 focus:ring-emerald-400"
+                  className="w-full rounded-xl border border-emerald-200 dark:border-emerald-700 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 focus:border-emerald-400 focus:ring-emerald-400"
                   defaultValue={queryParams.status}
                   onChange={(e) => searchFieldChanged("status", e.target.value)}
                 >
@@ -237,7 +237,7 @@ export default function AttestationsTable({
           <tbody>
             {attestations.data.map((attestation) => (
               <tr
-                className="border-b border-emerald-50 bg-white/95 transition-colors duration-150 hover:bg-[#f3fbf7]"
+                className="border-b border-emerald-50 dark:border-emerald-900 bg-white dark:bg-gray-800 transition-colors duration-150 hover:bg-emerald-50 dark:hover:bg-gray-700"
                 key={attestation.id}
               >
                 <td className="px-3 py-3 text-center font-semibold text-emerald-900">
@@ -286,7 +286,7 @@ export default function AttestationsTable({
                         "attestation.visualiserModel",
                         attestation.id
                       )}
-                      className="inline-flex min-w-[130px] items-center justify-center gap-2 rounded-2xl bg-emerald-500 py-2 px-4 font-semibold text-white shadow hover:bg-emerald-600 focus:ring-4 focus:ring-emerald-200"
+                      className="inline-flex min-w-[130px] items-center justify-center gap-2 rounded-2xl bg-emerald-500 dark:bg-emerald-600 py-2 px-4 font-semibold text-white shadow dark:shadow-emerald-900/50 hover:bg-emerald-600 dark:hover:bg-emerald-500 focus:ring-4 focus:ring-emerald-200 dark:focus:ring-emerald-900/50"
                     >
                       <FaEye className="icon" />
                       Visualiser

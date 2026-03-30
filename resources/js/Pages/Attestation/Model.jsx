@@ -11,7 +11,7 @@ const Model = ({ auth, attestation }) => {
     <AuthenticatedLayout
       user={auth.user}
       header={
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-[#2FAC86] p-4 rounded-md shadow-md text-white">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-[#2FAC86] p-4 rounded-md shadow-md dark:shadow-emerald-900/50 text-white">
           <h2 className="font-semibold text-xl text-white leading-tight">
             {`Attestation de  "${attestation.nomSociete}"`}
           </h2>
@@ -32,7 +32,7 @@ const Model = ({ auth, attestation }) => {
       <div name="pdf">
         <div className="py-12">
           <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-lg dark:shadow-xl dark:shadow-gray-900/50 sm:rounded-lg">
               <div className="p-6 px-12 text-gray-900 dark:text-gray-100">
                 <div
                   className="bg-white p-12 px-12 sm:rounded-lg flex items-center flex-col "

@@ -27,7 +27,7 @@ export default function Create({ auth, projects, users, services }) {
     <AuthenticatedLayout
       user={auth.user}
       header={
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-[#2FAC86] p-4 rounded-md shadow-md text-white">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-[#2FAC86] p-4 rounded-md shadow-md dark:shadow-emerald-900/50 text-white">
           <h2 className="font-semibold text-xl text-white leading-tight">
             Enregistrer un nouveau service
           </h2>
@@ -111,7 +111,7 @@ export default function Create({ auth, projects, users, services }) {
               <div className="mt-8 text-right">
                 <Link
                   href={route("service.index")}
-                  className="bg-gray-100 py-2 px-3 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2"
+                  className="bg-gray-100 dark:bg-gray-700 py-2 px-3 text-gray-800 dark:text-gray-200 rounded shadow dark:shadow-gray-900/50 transition-all hover:bg-gray-200 dark:hover:bg-gray-600 mr-2"
                 >
                   Annuler
                 </Link>

@@ -79,7 +79,7 @@ export default function Index({ auth, services, queryParams = null, success }) {
     <AuthenticatedLayout
       user={auth.user}
       header={
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-[#2FAC86] p-4 rounded-md shadow-md text-white">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-[#2FAC86] p-4 rounded-md shadow-md dark:shadow-emerald-900/50 text-white">
           <h2 className="font-semibold text-xl text-white leading-tight">
             SERVICES
           </h2>
