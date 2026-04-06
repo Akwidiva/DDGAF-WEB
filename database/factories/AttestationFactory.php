@@ -21,7 +21,7 @@ class AttestationFactory extends Factory
             'codeAttest' => $this->faker->unique()->numberBetween(1000, 9999),
             'nomSociete' => $this->faker->company(),
             'abreviation' => $this->faker->bothify('???'),
-            'capital' => $this->faker->numberBetween(100000, 10000000000),
+            'capital' => $this->faker->numberBetween(100000, 500000000),
             'status' => $this->faker->randomElement(['En_Cours', 'Archivee']),
             'numeroRCCM' => $this->faker->bothify('??####'),
             'NIU' => $this->faker->bothify('??####'),

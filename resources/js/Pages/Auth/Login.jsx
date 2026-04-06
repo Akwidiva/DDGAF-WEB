@@ -9,8 +9,10 @@ import { Head, Link, useForm } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import PageTransition from '@/Components/PageTransition';
 import { MdEmail, MdLock } from 'react-icons/md';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Login({ status, canResetPassword }) {
+    const { t } = useLanguage();
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -31,7 +33,7 @@ export default function Login({ status, canResetPassword }) {
 
     return (
         <GuestLayout>
-            <Head title="Connexion | DDGAF_WEB" />
+            <Head title={`${t('auth.login')} | DDGAF_WEB`} />
 
             <PageTransition>
                 <motion.div className="space-y-0">
@@ -56,7 +58,7 @@ export default function Login({ status, canResetPassword }) {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4, delay: 0.15 }}
                         >
-                            Bienvenue
+                            {t('auth.welcome')}
                         </motion.h1>
                         <motion.p 
                             className="text-sm text-gray-600 dark:text-gray-400 max-w-sm mx-auto"
@@ -64,7 +66,7 @@ export default function Login({ status, canResetPassword }) {
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.4, delay: 0.25 }}
                         >
-                            Connectez-vous à votre compte pour accéder à la plateforme.
+                            {t('auth.connectToAccount')}
                         </motion.p>
                     </motion.div>
                     <div className="w-12 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full mx-auto mb-8" />
@@ -108,7 +110,7 @@ export default function Login({ status, canResetPassword }) {
                         >
                             <div className="flex items-center gap-2">
                                 <MdEmail className="text-emerald-600 dark:text-emerald-400 text-lg" />
-                                <InputLabel htmlFor="email" value="Adresse e-mail" />
+                                <InputLabel htmlFor="email" value={t('auth.emailLabel')} />
                             </div>
                             <TextInput
                                 id="email"
@@ -118,7 +120,7 @@ export default function Login({ status, canResetPassword }) {
                                 className="mt-1 block w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 dark:focus:ring-emerald-900/30"
                                 isFocused={true}
                                 onChange={(e) => setData('email', e.target.value)}
-                                placeholder="vous@exemple.com"
+                                placeholder={t('auth.emailPlaceholder')}
                             />
                             <InputError message={errors.email} className="text-sm text-red-500" />
                         </motion.div>
@@ -133,7 +135,7 @@ export default function Login({ status, canResetPassword }) {
                         >
                             <div className="flex items-center gap-2">
                                 <MdLock className="text-emerald-600 dark:text-emerald-400 text-lg" />
-                                <InputLabel htmlFor="password" value="Mot de passe" />
+                                <InputLabel htmlFor="password" value={t('auth.passwordLabel')} />
                             </div>
                             <TextInput
                                 id="password"
@@ -160,7 +162,7 @@ export default function Login({ status, canResetPassword }) {
                                     checked={data.remember}
                                     onChange={(e) => setData('remember', e.target.checked)}
                                 />
-                                <span className="ml-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition">Se souvenir de moi</span>
+                                <span className="ml-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition">{t('auth.rememberMe')}</span>
                             </label>
 
                             {canResetPassword && (
@@ -172,7 +174,7 @@ export default function Login({ status, canResetPassword }) {
                                         href={route('password.request')}
                                         className="text-sm font-medium text-emerald-600 hover:text-emerald-500 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors"
                                     >
-                                        Mot de passe oublié ?
+                                        {t('auth.forgotPassword')} ?
                                     </Link>
                                 </motion.div>
                             )}
@@ -186,7 +188,7 @@ export default function Login({ status, canResetPassword }) {
                             }}
                         >
                             <PrimaryButton className="w-full justify-center py-3 text-base font-semibold" disabled={processing}>
-                                {processing ? 'Connexion en cours...' : 'Se connecter'}
+                                {processing ? t('auth.loggingIn') : t('auth.signIn')}
                             </PrimaryButton>
                         </motion.div>
                     </motion.form>
@@ -199,12 +201,12 @@ export default function Login({ status, canResetPassword }) {
                         transition={{ duration: 0.4, delay: 0.6 }}
                     >
                         <p>
-                            Pas encore de compte ?{' '}
+                            {t('auth.notHaveAccount')}{' '}
                             <Link
                                 href={route('register')}
                                 className="font-semibold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors"
                             >
-                                Demander un accès
+                                {t('auth.requestAccess')}
                             </Link>
                         </p>
                     </motion.div>

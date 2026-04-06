@@ -27,4 +27,25 @@ class StoreServicesRequest extends FormRequest
             'Description' => ['nullable', 'String'],
         ];
     }
+
+    /**
+     * Get custom messages for validator errors (bilingual).
+     */
+    public function messages(): array
+    {
+        $lang = app()->getLocale();
+        
+        $messages = [
+            'en' => [
+                'Nom.required' => 'Service name is required',
+                'Nom.max' => 'Service name must not exceed 255 characters',
+            ],
+            'fr' => [
+                'Nom.required' => 'Le nom du service est obligatoire',
+                'Nom.max' => 'Le nom du service ne doit pas dépasser 255 caractères',
+            ]
+        ];
+
+        return $messages[$lang] ?? $messages['en'];
+    }
 }

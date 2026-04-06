@@ -26,7 +26,7 @@
 3. Créer un fichier .env en copiant .env.example : `cp .env.example .env`
 4. Exécuter `composer install`
 5. Exécuter `npm install`
-6. Définir la clé d'application : `php artisan key:generate --ansi`
+6. Définir la clé d'application : `php artis-an key:generate --ansi`
 7. Exécuter des migrations et ensemencer des données : `php artisan migrate --seed`
 8. Démarrer le serveur vite : `npm run dev`
 9. Démarrer le serveur Artisan : `php -S localhost:8000 public/index.php`

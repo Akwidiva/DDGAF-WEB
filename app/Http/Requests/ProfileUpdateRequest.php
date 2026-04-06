@@ -20,4 +20,35 @@ class ProfileUpdateRequest extends FormRequest
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
         ];
     }
+
+    /**
+     * Get custom messages for validator errors (bilingual).
+     */
+    public function messages(): array
+    {
+        $lang = app()->getLocale();
+        
+        $messages = [
+            'en' => [
+                'name.required' => 'Name is required',
+                'name.string' => 'Name must be a string',
+                'name.max' => 'Name must not exceed 255 characters',
+                'email.required' => 'Email is required',
+                'email.email' => 'Email must be valid',
+                'email.unique' => 'Email is already taken',
+                'email.max' => 'Email must not exceed 255 characters',
+            ],
+            'fr' => [
+                'name.required' => 'Le nom est obligatoire',
+                'name.string' => 'Le nom doit être une chaîne de caractères',
+                'name.max' => 'Le nom ne doit pas dépasser 255 caractères',
+                'email.required' => 'L\'email est obligatoire',
+                'email.email' => 'L\'email doit être valide',
+                'email.unique' => 'Cet email est déjà utilisé',
+                'email.max' => 'L\'email ne doit pas dépasser 255 caractères',
+            ]
+        ];
+
+        return $messages[$lang] ?? $messages['en'];
+    }
 }
