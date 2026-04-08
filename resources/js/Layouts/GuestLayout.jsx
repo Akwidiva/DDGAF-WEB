@@ -1,13 +1,9 @@
 import GuestLogo from '@/Components/GuestLogo';
-import LanguageSwitcher from '@/Components/LanguageSwitcher';
 import { Link } from '@inertiajs/react';
 
 export default function Guest({ children }) {
     return (
         <div className="min-h-screen flex items-center justify-center px-4 bg-gray-100 dark:bg-gray-900 transition-colors">
-            <div className="absolute top-4 right-4">
-                <LanguageSwitcher />
-            </div>
             <div className="w-full max-w-md">
                 <div className="bg-white dark:bg-gray-800 shadow-lg rounded-3xl px-8 py-12 space-y-6 transition-colors">
                     <div className="flex justify-center">
