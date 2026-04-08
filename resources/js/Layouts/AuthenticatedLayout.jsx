@@ -3,18 +3,13 @@ import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
-import LanguageSwitcher from "@/Components/LanguageSwitcher";
-import { useLanguage } from "@/context/LanguageContext";
 import { Link } from "@inertiajs/react";
-import { FiBarChart2, FiCalendar } from 'react-icons/fi'; // Import de l'icône BarChart2
-import { BiCheckCircle, BiArchive, BiUser, BiCog, BiUserPlus, BiSolidUserDetail } from "react-icons/bi";
-import { AiOutlineEdit, AiOutlineUndo, AiOutlineFile, AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineBank, } from "react-icons/ai";
-import { FiUsers, FiLayers, FiBriefcase, FiTool, FiFileText, FiArchive, FiUser, FiLogOut } from 'react-icons/fi'; // Import des icônes nécessaires
-import { FaRegObjectUngroup } from "react-icons/fa";
+import { FiBarChart2, FiCalendar, FiUsers, FiLayers, FiFileText, FiArchive, FiUser, FiLogOut } from 'react-icons/fi';
+import { BiArchive, BiSolidUserDetail } from "react-icons/bi";
+import { AiOutlineBank } from "react-icons/ai";
+
 export default function AuthenticatedLayout({ user, header, children }) {
-  const [showingNavigationDropdown, setShowingNavigationDropdown] =
-    useState(false);
-  const { t } = useLanguage();
+  const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -34,7 +29,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                   active={route().current("dashboard")}
                 >
                   <FiBarChart2 className="text-gray-600 dark:text-gray-300 mr-2" />
-                  {t('nav.dashboard')}
+                  TABLEAU DE BORD
                 </NavLink>
 
                 {user.role === "admin" ? (
@@ -44,7 +39,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                       active={route().current("user.index")}
                     >
                       <FiUsers className="inline-block align-middle mr-1" />
-                      {t('nav.users')}
+                      COMPTES UTILISATEURS
                     </NavLink>
 
                     <NavLink
@@ -52,7 +47,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                       active={route().current("service.index")}
                     >
                       <FiLayers className="inline-block align-middle mr-1" />
-                      {t('nav.services')}
+                      SERVICES
                     </NavLink>
 
                     <NavLink
@@ -60,7 +55,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                       active={route().current("project.index")}
                     >
                       <FiCalendar className="inline-block align-middle mr-1" />
-                      {t('nav.projects')}
+                      EXERCICES
                     </NavLink>
                   </>
                 ) : (
@@ -70,7 +65,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                       active={route().current("entreprise.index")}
                     >
                       <AiOutlineBank className="inline-block align-middle mr-1" />
-                      {t('nav.enterprises')}
+                      ENTREPRISES
                     </NavLink>
 
                     <NavLink
@@ -78,7 +73,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                       active={route().current("attestation.myAttestations")}
                     >
                       <BiArchive className="inline-block align-middle mr-1" />
-                      {t('nav.myAttestations')}
+                      MES ATTESTATIONS
                     </NavLink>
 
                     <NavLink
@@ -88,16 +83,13 @@ export default function AuthenticatedLayout({ user, header, children }) {
                       )}
                     >
                       <FiArchive className="inline-block align-middle mr-1" />
-                      {t('nav.archivedAttestations')}
+                      TOUTES LES ATTESTATIONS ARCHIVÉES
                     </NavLink>
                   </>
                 )}
               </div>
             </div>
             <div className="hidden sm:flex sm:items-center sm:ms-6">
-              <div className="pr-4 border-r border-gray-200 dark:border-gray-700">
-                <LanguageSwitcher />
-              </div>
               <div className="ms-3 relative">
                 <Dropdown>
                   <Dropdown.Trigger>
@@ -130,7 +122,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                     >
 
                       <BiSolidUserDetail className="h-4 w-4 mr-2" />
-                      {t('nav.profile')}
+                      MON PROFIL
                     </Dropdown.Link>
                     <Dropdown.Link
                       href={route("logout")}
@@ -139,7 +131,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                       style={{ display: "flex", justifyContent: "start", alignItems: "center" }}
                     >
                       <FiLogOut className="h-4 w-4 mr-2" />
-                      {t('nav.logout')}
+                      SE DÉCONNECTER
                     </Dropdown.Link>
                   </Dropdown.Content>
                 </Dropdown>
@@ -195,7 +187,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
               href={route("dashboard")}
               active={route().current("dashboard")}
             >
-              {t('nav.dashboard')}
+              TABLEAU DE BORD
             </ResponsiveNavLink>
           </div>
 
@@ -211,14 +203,14 @@ export default function AuthenticatedLayout({ user, header, children }) {
 
             <div className="mt-3 space-y-1">
               <ResponsiveNavLink href={route("profile.edit")} >
-                {t('nav.profile')}
+                MON PROFIL
               </ResponsiveNavLink>
               <ResponsiveNavLink
                 method="post"
                 href={route("logout")}
                 as="button"
               >
-                {t('nav.logout')}
+                SE DÉCONNECTER
               </ResponsiveNavLink>
             </div>
           </div>

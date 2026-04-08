@@ -57,31 +57,14 @@ class StoreAttestationRequest extends FormRequest
      */
     public function messages(): array
     {
-        $lang = app()->getLocale();
-        
-        $messages = [
-            // English
-            'en' => [
-                'nomSociete.required' => 'Company name is required',
-                'assigned_user_id.required' => 'Assigned user is required',
-                'assigned_user_id.exists' => 'The selected user does not exist',
-                'service_id.required' => 'Service is required',
-                'service_id.exists' => 'The selected service does not exist',
-                'project_id.required' => 'Project is required',
-                'project_id.exists' => 'The selected project does not exist',
-            ],
-            // French
-            'fr' => [
-                'nomSociete.required' => 'Le nom de l\'entreprise est obligatoire',
-                'assigned_user_id.required' => 'L\'utilisateur assigné est obligatoire',
-                'assigned_user_id.exists' => 'L\'utilisateur sélectionné n\'existe pas',
-                'service_id.required' => 'Le service est obligatoire',
-                'service_id.exists' => 'Le service sélectionné n\'existe pas',
-                'project_id.required' => 'L\'exercice est obligatoire',
-                'project_id.exists' => 'L\'exercice sélectionné n\'existe pas',
-            ]
+        return [
+            'nomSociete.required' => 'Le nom de l\'entreprise est obligatoire',
+            'assigned_user_id.required' => 'L\'utilisateur assigné est obligatoire',
+            'assigned_user_id.exists' => 'L\'utilisateur sélectionné n\'existe pas',
+            'service_id.required' => 'Le service est obligatoire',
+            'service_id.exists' => 'Le service sélectionné n\'existe pas',
+            'project_id.required' => 'L\'exercice est obligatoire',
+            'project_id.exists' => 'L\'exercice sélectionné n\'existe pas',
         ];
-
-        return $messages[$lang] ?? $messages['en'];
     }
 }
