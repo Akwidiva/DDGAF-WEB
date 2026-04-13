@@ -80,11 +80,18 @@ class AttestationController extends Controller
         }
 
         try {
-            // 3. Generate the PDF file
-            $filename = "Attestation_de_" . $attestation->nomSociete . ".pdf";
-            $filePath = public_path($filename);
+            // 3. Generate the PDF file with random name and save to storage (not public)
+            $randomFilename = "Attestation_" . uniqid() . "_" . time() . ".pdf";
+            $storagePath = storage_path("app/private/attestations/");
+            
+            // Ensure directory exists
+            if (!is_dir($storagePath)) {
+                mkdir($storagePath, 0755, true);
+            }
+            
+            $filePath = $storagePath . $randomFilename;
 
-            // Generate the PDF file and save to public folder
+            // Generate the PDF file and save to storage
             $this->generatePDF($attestation, $filePath);
 
             // Verify file exists before sending
@@ -204,6 +211,7 @@ class AttestationController extends Controller
      */
     public function show(Attestation $attestation)
     {
+        $this->authorize('view', $attestation);
         $attestation->load(['entreprise', 'project', 'createdBy', 'updatedBy', 'assignedUser']);
          // Récupération des informations du projet et de l'utilisateur associés à l'attestation
         return inertia('Attestation/Show', [
@@ -215,6 +223,7 @@ class AttestationController extends Controller
 
     public function edit(Attestation $attestation)
     {
+        $this->authorize('update', $attestation);
         $projects = Project::query()->orderBy('name', 'asc')->get();
         $users = User::query()->orderBy('name', 'asc')->get();
         return inertia("Attestation/Edit", [
@@ -229,6 +238,7 @@ class AttestationController extends Controller
      */
     public function update(UpdateAttestationRequest $request, Attestation $attestation)
     {
+        $this->authorize('update', $attestation);
         $data = $request->validated();
         $data['updated_by'] = Auth::id();
 
@@ -260,6 +270,7 @@ class AttestationController extends Controller
      */
     public function destroy(Attestation $attestation, Request $request)
     {
+        $this->authorize('delete', $attestation);
         $name = $attestation->nomSociete;
 
         if ($attestation->status == 'Archivee') {
@@ -396,13 +407,23 @@ class AttestationController extends Controller
 
     public function telechargerModel(Attestation $attestation)
     {
-        $filename = "Attestation_de_" . $attestation->nomSociete . ".pdf";
-        $filePath = public_path($filename);
+        // Check authorization
+        $this->authorize('view', $attestation);
         
+        // Generate PDF with random filename in storage
+        $randomFilename = "Attestation_" . uniqid() . "_" . time() . ".pdf";
+        $storagePath = storage_path("app/private/attestations/");
+        
+        // Ensure directory exists
+        if (!is_dir($storagePath)) {
+            mkdir($storagePath, 0755, true);
+        }
+        
+        $filePath = $storagePath . $randomFilename;
         $this->generatePDF($attestation, $filePath);
 
-        // Téléchargement du PDF
-        return response()->download($filePath);
+        // Download the PDF from storage (not publicly accessible)
+        return response()->download($filePath, "Attestation_de_" . $attestation->nomSociete . ".pdf")->deleteFileAfterSend();
     }
 
     private function generatePDF(Attestation $attestation, $filePath)

@@ -75,12 +75,11 @@ class ServiceController extends Controller
      * Display the specified resource.
      */
     public function show(Services $service)
-    { {
+    {
             // Récupération des informations du projet et de l'utilisateur associés à l'service
             return inertia('Service/Show', [
                 'service' => new ServiceResource($service),
             ]);
-        }
     }
 
     /**
@@ -112,16 +111,14 @@ class ServiceController extends Controller
      */
     public function destroy(Services $service)
     {
-        // dd($service);
-    if ($service['statut'] == 'enable') {
-        $service['statut'] = "disable";
-    }else {
-        $service["statut"] = "enable";
-    }
-           $service->update();
+        if ($service->statut == 'enable') {
+            $service->statut = "disable";
+        } else {
+            $service->statut = "enable";
+        }
+        $service->save();
 
-
-            return redirect()->route('service.index')->with('success', "Le service \"$service->Abreviation\" a été restauré avec succès !");
+        return redirect()->route('service.index')->with('success', "Le service \"$service->Abreviation\" a été restauré avec succès !");
       
     }
 

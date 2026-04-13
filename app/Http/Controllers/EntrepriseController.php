@@ -70,18 +70,15 @@ class EntrepriseController extends Controller
         if ($QuantiteTitresCollectes > $QuantiteTitresCollectesTotale) {
             return redirect()->route('entreprise.create')
                 ->with('error', 'desole mais la quantite collecte est plus grande que la quantite totale, veuillez entrer des valeurs correctes !');
-        } else {
-            if ($request->all()) {
-                $data = $request->all();
-                $data['created_by'] = Auth::id();
-                $data['updated_by'] = Auth::id();
-
-                // dd($data);
-                Entreprise::create($data);
-                return redirect()->route('entreprise.index')
-                    ->with('success', 'Une entreprise a été créée !');
-            }
         }
+
+        $data = $request->validated();
+        $data['created_by'] = Auth::id();
+        $data['updated_by'] = Auth::id();
+
+        Entreprise::create($data);
+        return redirect()->route('entreprise.index')
+            ->with('success', 'Une entreprise a été créée !');
     }
 
     /**

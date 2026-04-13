@@ -83,6 +83,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        $this->authorize('view', $project);
         $query = $project->attestations();
 
         $sortField = request("sort_field", 'created_at');
@@ -111,6 +112,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $this->authorize('update', $project);
         return inertia('Project/Edit', [
             'project' => new ProjectResource($project),
         ]);
@@ -121,6 +123,7 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
+        $this->authorize('update', $project);
         $data = $request->validated();
         $data['updated_by'] = Auth::id();
         $project->update($data);
@@ -134,6 +137,7 @@ class ProjectController extends Controller
 
     public function destroy(Project $project, Request $request)
     {
+        $this->authorize('delete', $project);
         $name = $project->name;
         if ($project->status == 'Archivee') {
 

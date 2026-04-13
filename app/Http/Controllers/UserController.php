@@ -63,7 +63,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $data = $request->validated();
-        $data['email_verified_at'] = time();
+        $data['email_verified_at'] = now();
         $data['password'] = bcrypt($data['password']);
         // service_id is already in validated data from the request
 
@@ -75,14 +75,12 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-
     public function show(User $user)
-    { {
+    {
             // Récupération des informations du projet et de l'utilisateur associés à l'attestation
             return inertia('User/Show', [
                 'user' => new UserResource($user),
             ]);
-        }
     }
 
     /**
