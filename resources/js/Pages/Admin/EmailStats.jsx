@@ -37,3 +37,6 @@ export default function EmailStats({ auth, stats }) {
     </AuthenticatedLayout>
   );
 }
+
+
+

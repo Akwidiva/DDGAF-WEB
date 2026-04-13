@@ -23,8 +23,6 @@ export default function Create({ auth }) {
     dateAvis: "", // Ajoute dateAvis dans les données initiales
   });
 
-  console.log(formattedEndOfYear)
-
   const onSubmit = (e) => {
     e.preventDefault();
     // Créer l'exercice

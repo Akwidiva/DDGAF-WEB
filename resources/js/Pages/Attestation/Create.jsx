@@ -43,9 +43,18 @@ export default function Create({
     if (!dateString) {
       return null;
     }
-    const [day, month, year] = dateString.split('-');
-    const parsedYear = parseInt(year, 10);
-    return Number.isNaN(parsedYear) ? null : parsedYear;
+    // Extract year using regex - handles YYYY-MM-DD and DD-MM-YYYY formats
+    const match = dateString.match(/(\d{4})/);
+    return match ? parseInt(match[1], 10) : null;
+  };
+
+  // Extract year from project name (which is the year itself)
+  const extractYearFromProjectName = (projectName) => {
+    if (!projectName) {
+      return null;
+    }
+    const year = parseInt(projectName, 10);
+    return !isNaN(year) && year > 1900 && year < 2100 ? year : null;
   };
 
   // Fonction pour formater la date au format YYYY-MM-DD si nécessaire
@@ -58,11 +67,11 @@ export default function Create({
     ? formatDateToISO(firstProject.dateAvis) // Format si la date est dans un autre format
     : "";
 
-  const firstProjectYear = firstProject ? extractYearFromDateString(firstProject.dateAvis) : null;
+  const firstProjectYear = firstProject ? extractYearFromProjectName(firstProject.name) : null;
 
   const projectYears = useMemo(() => {
     return projectList
-      .map((project) => extractYearFromDateString(project.dateAvis))
+      .map((project) => extractYearFromProjectName(project.name))
       .filter((year) => typeof year === "number");
   }, [projectList]);
 
@@ -105,7 +114,7 @@ export default function Create({
 
   const projectForSelectedYear = useMemo(() => {
     return projectList.find(
-      (project) => extractYearFromDateString(project.dateAvis) === selectedYear
+      (project) => extractYearFromProjectName(project.name) === selectedYear
     ) || null;
   }, [projectList, selectedYear]);
 

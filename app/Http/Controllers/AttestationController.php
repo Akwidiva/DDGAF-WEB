@@ -67,15 +67,20 @@ class AttestationController extends Controller
       
     public function sendEmail(Attestation $attestation)
     {
-        // 1. Fetch the email from the related entreprise
+        // 1. Check if attestation has associated company
+        if (!$attestation->entreprise) {
+            return back()->with('error', "Cette attestation n'est pas associée à une entreprise.");
+        }
+
+        // 2. Fetch the email from the related entreprise
         $email = $attestation->entreprise->email ?? null;
 
         if (!$email) {
-            return back()->with('error', "L'entreprise n'a pas d'adresse email.");
+            return back()->with('error', "L'entreprise '{$attestation->entreprise->Nom}' n'a pas d'adresse email configurée. Veuillez ajouter l'email de l'entreprise dans la section ENTREPRISES.");
         }
 
         try {
-            // 2. Generate the PDF file
+            // 3. Generate the PDF file
             $filename = "Attestation_de_" . $attestation->nomSociete . ".pdf";
             $filePath = public_path($filename);
 
@@ -95,7 +100,7 @@ class AttestationController extends Controller
                 return back()->with('error', "Impossible de générer le fichier PDF.");
             }
 
-            // 3. Send the Mail
+            // 4. Send the Mail FROM the company email TO the company
             Mail::to($email)->send(new AttestationMail($attestation, $filePath));
 
             // Log success
@@ -106,7 +111,7 @@ class AttestationController extends Controller
                 'status' => 'success',
             ]);
 
-            return back()->with('success', "Attestation envoyée avec succès à : " . $email);
+            return back()->with('success', "Attestation envoyée avec succès à {$attestation->entreprise->Nom} ({$email})");
         } catch (\Exception $e) {
             // Log failure
             EmailLog::create([
@@ -117,7 +122,7 @@ class AttestationController extends Controller
                 'error_message' => $e->getMessage(),
             ]);
 
-            return back()->with('error', "Échec de l'envoi : " . $e->getMessage());
+            return back()->with('error', "Échec de l'envoi à {$email}: " . $e->getMessage());
         }
     }
     /**
@@ -166,18 +171,27 @@ class AttestationController extends Controller
         $entreprise = Entreprise::where('Nom', $request->nomSociete)->first();
         if ($entreprise) {
             $data['entreprise_id'] = $entreprise->id;
+            
+            // Check if attestation already exists for this company and project
+            $existingAttestation = Attestation::where('entreprise_id', $entreprise->id)
+                ->where('project_id', $request->project_id)
+                ->exists();
+            
+            if ($existingAttestation) {
+                return redirect()->route('attestation.create')
+                    ->with('error', "Une attestation existe déjà pour {$entreprise->Nom} pour cet exercice. Une seule attestation par entreprise par exercice est autorisée!");
+            }
         }
+        
+        // Génération sécurisée du code
         $data['created_by'] = Auth::id();
         $data['updated_by'] = Auth::id();
-
-        $data['codeAttest'] = strrev($request->codeAdherent + $request->name);
+        $data['codeAttest'] = strrev($request->codeAdherent . '-' . $request->name);
         $data['date'] = $request['dateAvis'];
 
-        $attestations = Attestation::all();
-
-       if (Attestation::where('codeAttest', $data['codeAttest'])->exists()) {
-            return redirect()->route('attestation.create')
-                ->with('error', 'désolé mais cette attestation existe déjà pour cette exercice!');
+        // Vérification optimisée des doublons
+        if (Attestation::where('codeAttest', $data['codeAttest'])->exists()) {
+            return redirect()->back()->with('error', 'Une attestation avec ce code existe déjà');
         }
 
         Attestation::create($data);

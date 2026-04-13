@@ -30,6 +30,7 @@ class StoreUserRequest extends FormRequest
                 'confirmed',
                 Password::min(8)->letters()->symbols(),
             ],
+            "service_id" => ["required", "exists:services,id"],
         ];
     }
 

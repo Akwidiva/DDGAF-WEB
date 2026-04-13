@@ -14,7 +14,13 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', '/dashboard');
 
 Route::middleware(['auth.user', 'auth.isActive'])->group(function () {
+    // API endpoint for dynamically fetching available years from projects - accessible to all authenticated users
+    Route::get('api/project-years', [ProjectController::class, 'getAvailableYears'])->name('project.years');
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Entreprises accessible to both admin and users
+    Route::resource('entreprise', EntrepriseController::class);
 
     //controlle d'acces pour les routes des admins
     Route::middleware(['role.admin'])->group(
@@ -37,7 +43,6 @@ Route::middleware(['auth.user', 'auth.isActive'])->group(function () {
                 ->name('attestation.sendEmail');
             Route::get('attestation/visualiser-PDF/{attestation}', [AttestationController::class, 'visualiserModel'])->name('attestation.visualiserModel');
             Route::resource('attestation', AttestationController::class);
-            Route::resource('entreprise', EntrepriseController::class);
         }
     );
 

@@ -57,6 +57,14 @@ export default function AuthenticatedLayout({ user, header, children }) {
                       <FiCalendar className="inline-block align-middle mr-1" />
                       EXERCICES
                     </NavLink>
+
+                    <NavLink
+                      href={route("admin.email.stats")}
+                      active={route().current("admin.email.stats")}
+                    >
+                      <FiFileText className="inline-block align-middle mr-1" />
+                      STATS EMAILS
+                    </NavLink>
                   </>
                 ) : (
                   <>

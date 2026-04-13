@@ -24,9 +24,6 @@ export default function AttestationsTable({
   queryParams = queryParams || {};
 
   const searchFieldChanged = (name, value) => {
-    console.log(value)
-    console.log(name)
-    console.log(queryParams)
     if (value) {
       queryParams[name] = value;
     } else {
@@ -37,9 +34,6 @@ export default function AttestationsTable({
   };
 
   const searchFieldChange = (codeAttest, value) => {
-    console.log(value)
-    console.log(codeAttest)
-    console.log(queryParams)
     if (value) {
       queryParams[codeAttest] = value;
     } else {

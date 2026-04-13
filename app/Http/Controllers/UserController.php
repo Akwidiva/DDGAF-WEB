@@ -63,9 +63,9 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $data = $request->validated();
-        $data["service_id"] = $request->service_id;
         $data['email_verified_at'] = time();
         $data['password'] = bcrypt($data['password']);
+        // service_id is already in validated data from the request
 
         User::create($data);
         return to_route('user.index')

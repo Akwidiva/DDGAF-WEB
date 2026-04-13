@@ -19,12 +19,18 @@ class DashboardController extends Controller
         
         // chaque que fois que l'utilisateur se connecte ou accede a la page principale, un controle de session est effectue sur toutes les attestation
         foreach($attestations as $attestation){
-            $result = strrev($attestation->codeAttest) - $attestation->codeAdherent;
-            $session = "$result";
+            // Extraire l'année de codeAttest
+            // codeAttest est au format: strrev(codeAdherent . '-' . name)
+            // On inverse pour revenir au format: codeAdherent-name
+            $originalCode = strrev($attestation->codeAttest);
+            $parts = explode('-', $originalCode);
+            $attestationYear = isset($parts[1]) ? $parts[1] : null;
+            $currentYear = date('Y');
             
-            if($session !== date('Y')){
-                $data[] = $attestation->status = 'Archivee';
-                $attestation->update($data);
+            // Archiver si l'année de l'attestation ne correspond pas à l'année en cours
+            if($attestationYear && $attestationYear !== $currentYear){
+                $attestation->status = 'Archivee';
+                $attestation->save();
             }
         }
         

@@ -164,4 +164,32 @@ class ProjectController extends Controller
                 ->with('success', "L'exercice \"$name\" a été archivé avec succès ! ");
         };
     }
+
+    /**
+     * Get available years from projects name field
+     * This endpoint returns dynamically extracted years from all projects
+     */
+    public function getAvailableYears()
+    {
+        $years = Project::query()
+            ->whereNotNull('name')
+            ->get()
+            ->map(function ($project) {
+                // Extract year from project name (which is typically a year like "2025")
+                $year = (int) $project->name;
+                if ($year > 1900 && $year < 2100) {
+                    return $year;
+                }
+                return null;
+            })
+            ->filter()
+            ->unique()
+            ->sort()
+            ->values();
+
+        return response()->json([
+            'years' => $years,
+            'success' => true,
+        ]);
+    }
 }
